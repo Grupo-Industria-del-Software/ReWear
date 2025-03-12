@@ -1,14 +1,11 @@
 ﻿using Application.DTOs.Status;
+using Application.Interfaces.Categories;
 using Application.Interfaces.Status;
 using Application.Services;
+using Application.Services.CategoryServices;
 using Domain.Entities;
 using Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Dependencies
 {
@@ -22,6 +19,9 @@ namespace Infrastructure.Dependencies
             services.AddScoped<IStatusService<OrderStatus, StatusRequestDTO, StatusResponseDTO>, StatusService<OrderStatus, StatusRequestDTO, StatusResponseDTO>>();
             services.AddScoped<IStatusService<PaymentStatus, StatusRequestDTO, StatusResponseDTO>, StatusService<PaymentStatus, StatusRequestDTO, StatusResponseDTO>>();
 
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            
             return services;
         } 
     }

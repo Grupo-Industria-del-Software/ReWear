@@ -403,3 +403,7 @@ API/.env
 Infrastructure/Migrations/*
 
 .vs/*
+
+proy_is.sln.DotSettings
+
+.idea/*

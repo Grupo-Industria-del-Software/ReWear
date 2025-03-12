@@ -9,6 +9,6 @@ namespace Application.DTOs.Status
     public class StatusResponseDTO
     {
         public int Id { get; set; }
-        public string Status { get; set; }
+        public string Status { get; set; } = string.Empty;
     }
 }

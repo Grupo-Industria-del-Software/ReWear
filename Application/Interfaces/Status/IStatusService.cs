@@ -1,10 +1,5 @@
 ﻿using Application.DTOs.Status;
 using Domain.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Interfaces.Status
 {
@@ -15,8 +10,8 @@ namespace Application.Interfaces.Status
     {
         Task<IEnumerable<TStatusResponseDTO>> GetAllAsync();
         Task<TStatusResponseDTO?> GetByIdAsync(int id);
-        Task<TStatusResponseDTO> CreateAsync(TStatusRequestDTO statusRequestDTO);
-        Task<bool> UpdateAsync(int id, TStatusRequestDTO statusRequestDTO);
+        Task<TStatusResponseDTO> CreateAsync(TStatusRequestDTO statusRequestDto);
+        Task<bool> UpdateAsync(int id, TStatusRequestDTO statusRequestDto);
         Task<bool> DeleteAsync(int id);
     }
 }

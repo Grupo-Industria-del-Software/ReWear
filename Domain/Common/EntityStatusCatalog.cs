@@ -9,6 +9,6 @@ namespace Domain.Common
     public abstract class EntityStatusCatalog
     {
         public int Id { get; set; }
-        public string Status { get; set; }
+        public string Status { get; set; } = string.Empty;
     }
 }
