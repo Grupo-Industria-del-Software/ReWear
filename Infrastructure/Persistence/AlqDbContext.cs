@@ -9,6 +9,7 @@ namespace Infrastructure.Persistence
         {
         }
 
+
         public DbSet<OrderType> OrderTypes { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
