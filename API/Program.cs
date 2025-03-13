@@ -1,4 +1,5 @@
 using API.Config;
+using Infrastructure.Dependencies;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Dependencies;
@@ -10,6 +11,7 @@ var dbConfig = new DbConfig();
 builder.Services.AddDbContext<AlqDbContext>(options => options.UseSqlServer(dbConfig.ConnectionString));
 
 builder.Services.AddInfrastructure();
+builder.Services.addInfrastructure();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
