@@ -1,5 +1,6 @@
-﻿using Domain.Entities;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace Infrastructure.Persistence
 {
@@ -8,6 +9,8 @@ namespace Infrastructure.Persistence
         public AlqDbContext(DbContextOptions<AlqDbContext> options) : base(options)
         {
         }
+
+        public DbSet<OrderType> OrderTypes { get; set; }
 
         public DbSet<OrderStatus> OrderStatus { get; set; }
         public DbSet<PaymentStatus> PaymentStatus { get; set; }
