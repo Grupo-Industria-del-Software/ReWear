@@ -1,17 +1,19 @@
 ﻿using Application.DTOs.Status;
 using Application.Interfaces.Categories;
+using Application.Interfaces.OrderTypes;
 using Application.Interfaces.Status;
 using Application.Services;
 using Application.Services.CategoryServices;
+using Application.Services.OrderTypes;
 using Domain.Entities;
 using Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Dependencies
 {
-    public static class StatusDependencyContainer
+    public static class DependencyContainer
     {
-        public static IServiceCollection addInfrastructure(this  IServiceCollection services)
+        public static IServiceCollection AddInfrastructure(this  IServiceCollection services)
         {
             // Status
             services.AddScoped(typeof(IStatusRepository<>), typeof(StatusRepository<>));
@@ -20,8 +22,13 @@ namespace Infrastructure.Dependencies
             services.AddScoped<IStatusService<OrderStatus, StatusRequestDTO, StatusResponseDTO>, StatusService<OrderStatus, StatusRequestDTO, StatusResponseDTO>>();
             services.AddScoped<IStatusService<PaymentStatus, StatusRequestDTO, StatusResponseDTO>, StatusService<PaymentStatus, StatusRequestDTO, StatusResponseDTO>>();
 
+            // Category
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            
+            // OrderType
+            services.AddScoped<IOrderTypeService, OrderTypeService>();
+            services.AddScoped<IOrderTypeRepository, OrderTypeRepository>();
             
             return services;
         } 
