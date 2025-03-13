@@ -13,6 +13,7 @@ namespace Infrastructure.Dependencies
     {
         public static IServiceCollection addInfrastructure(this  IServiceCollection services)
         {
+            // Status
             services.AddScoped(typeof(IStatusRepository<>), typeof(StatusRepository<>));
             services.AddScoped(typeof(IStatusService<,,>), typeof(StatusService<,,>));
 
