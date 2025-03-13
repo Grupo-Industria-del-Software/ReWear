@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.Status;
+using Application.Interfaces;
 using Application.Interfaces.Categories;
 using Application.Interfaces.Status;
 using Application.Services;
@@ -20,8 +21,11 @@ namespace Infrastructure.Dependencies
             services.AddScoped<IStatusService<PaymentStatus, StatusRequestDTO, StatusResponseDTO>, StatusService<PaymentStatus, StatusRequestDTO, StatusResponseDTO>>();
 
             services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
-            
+            services.AddScoped<ICategoryRepository, CategoryRepository>(); 
+
+            services.AddScoped<IUserRolesService, UserRolesService>();
+            services.AddScoped<IUserRolesRepository, UserRolesRepository>();
+
             return services;
         } 
     }
