@@ -30,6 +30,10 @@ namespace Infrastructure.Dependencies
             services.AddScoped<IUserRolesService, UserRolesService>();
             services.AddScoped<IUserRolesRepository, UserRolesRepository>();
 
+            // UserRoles
+            services.AddScoped<IUserRolesService, UserRolesService>();
+            services.AddScoped<IUserRolesRepository, UserRolesRepository>();
+
             return services;
         } 
     }
