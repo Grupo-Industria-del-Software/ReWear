@@ -10,9 +10,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Dependencies
 {
-    public static class StatusDependencyContainer
+    public static class DependencyContainer
     {
-        public static IServiceCollection addInfrastructure(this  IServiceCollection services)
+        public static IServiceCollection AddInfrastructure(this  IServiceCollection services)
         {
             services.AddScoped(typeof(IStatusRepository<>), typeof(StatusRepository<>));
             services.AddScoped(typeof(IStatusService<,,>), typeof(StatusService<,,>));
