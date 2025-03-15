@@ -1,7 +1,9 @@
 ﻿using Application.DTOs.Status;
+using Application.Interfaces;
 using Application.Interfaces.Categories;
 using Application.Interfaces.OrderTypes;
 using Application.Interfaces.Status;
+using Application.Interfaces.userRoles;
 using Application.Services;
 using Application.Services.CategoryServices;
 using Application.Services.OrderTypes;
@@ -24,12 +26,15 @@ namespace Infrastructure.Dependencies
 
             // Category
             services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
-            
-            // OrderType
-            services.AddScoped<IOrderTypeService, OrderTypeService>();
-            services.AddScoped<IOrderTypeRepository, OrderTypeRepository>();
-            
+            services.AddScoped<ICategoryRepository, CategoryRepository>(); 
+
+            services.AddScoped<IUserRolesService, UserRolesService>();
+            services.AddScoped<IUserRolesRepository, UserRolesRepository>();
+
+            // UserRoles
+            services.AddScoped<IUserRolesService, UserRolesService>();
+            services.AddScoped<IUserRolesRepository, UserRolesRepository>();
+
             return services;
         } 
     }
