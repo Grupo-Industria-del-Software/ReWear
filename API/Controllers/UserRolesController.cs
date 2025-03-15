@@ -1,6 +1,7 @@
 ﻿using Application.DTOs;
 using Application.Interfaces;
 using Application.DTOs.UserRolesDTO.UserRolesDTO;
+using Application.Interfaces.userRoles;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
