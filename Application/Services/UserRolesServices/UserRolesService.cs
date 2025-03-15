@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.DTOs.UserRolesDTO;
 using Application.DTOs.UserRolesDTO.UserRolesDTO;
+using Application.Interfaces.userRoles;
 using Domain.Entities;
 
 namespace Application.Services

@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Application.DTOs.UserRolesDTO;
+﻿using Application.DTOs.UserRolesDTO;
 using Application.DTOs.UserRolesDTO.UserRolesDTO;
 
-namespace Application.Interfaces
+namespace Application.Interfaces.userRoles
 {
     public interface IUserRolesService
     {
