@@ -28,8 +28,9 @@ namespace Infrastructure.Dependencies
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICategoryRepository, CategoryRepository>(); 
 
-            services.AddScoped<IUserRolesService, UserRolesService>();
-            services.AddScoped<IUserRolesRepository, UserRolesRepository>();
+            // OrderType
+            services.AddScoped<IOrderTypeService, OrderTypeService>();
+            services.AddScoped<IOrderTypeRepository, OrderTypeRepository>();
 
             // UserRoles
             services.AddScoped<IUserRolesService, UserRolesService>();
