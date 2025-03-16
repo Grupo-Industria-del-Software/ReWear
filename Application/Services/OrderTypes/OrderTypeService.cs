@@ -24,27 +24,27 @@ namespace Application.Services.OrderTypes
         }
         public async Task<OrderTypeResponseDTO> GetByIdAsync(int id)
         {
-            var product = await _orderTypeRepository.GetByIdAsync(id);
-            return product is null ? null : new OrderTypeResponseDTO { Id = product.Id, Type = product.Type };
+            var orderType = await _orderTypeRepository.GetByIdAsync(id);
+            return orderType is null ? null : new OrderTypeResponseDTO { Id = orderType.Id, Type = orderType.Type };
 
         }
         public async Task<OrderTypeResponseDTO> CreateAsync(OrderTypeRequestDTO dto)
         {
-            var product = new Domain.Entities.OrderType(dto.Type);
-            await _orderTypeRepository.AddAsync(product);
-            return new OrderTypeResponseDTO { Id = product.Id, Type = product.Type };
+            var orderType = new Domain.Entities.OrderType(dto.Type);
+            await _orderTypeRepository.AddAsync(orderType);
+            return new OrderTypeResponseDTO { Id = orderType.Id, Type = orderType.Type };
         }
 
         public async Task<bool> UpdateAsync(int id, OrderTypeRequestDTO dto)
         {
-            var product = await _orderTypeRepository.GetByIdAsync(id);
+            var orderType = await _orderTypeRepository.GetByIdAsync(id);
 
-            if (product is null)
+            if (orderType is null)
                 return false;
 
-            product.Type = dto.Type;
+            orderType.Type = dto.Type;
 
-            return await _orderTypeRepository.UpdateAsync(product);
+            return await _orderTypeRepository.UpdateAsync(orderType);
         }
         public async Task<bool> DeleteAsync(int id)
         {
