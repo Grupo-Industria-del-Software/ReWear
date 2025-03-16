@@ -11,7 +11,7 @@ namespace Infrastructure.Persistence
         }
 
         public DbSet<OrderType> OrderTypes { get; set; }
-
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<OrderStatus> OrderStatus { get; set; }
         public DbSet<PaymentStatus> PaymentStatus { get; set; }
         public DbSet<Category> Categories { get; set; }

@@ -2,11 +2,13 @@
 using Application.Interfaces;
 using Application.Interfaces.Categories;
 using Application.Interfaces.OrderTypes;
+using Application.Interfaces.PaymentMethods;
 using Application.Interfaces.Status;
 using Application.Interfaces.userRoles;
 using Application.Services;
 using Application.Services.CategoryServices;
 using Application.Services.OrderTypes;
+using Application.Services.PaymentMethods;
 using Domain.Entities;
 using Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,6 +37,10 @@ namespace Infrastructure.Dependencies
             // UserRoles
             services.AddScoped<IUserRolesService, UserRolesService>();
             services.AddScoped<IUserRolesRepository, UserRolesRepository>();
+
+            // PaymentMethods
+            services.AddScoped<IPaymentMethodService, PaymentMethodService>();
+            services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
 
             return services;
         } 
