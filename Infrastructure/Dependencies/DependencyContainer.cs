@@ -1,6 +1,7 @@
 ﻿using Application.DTOs.Status;
 using Application.Interfaces;
 using Application.Interfaces.Categories;
+using Application.Interfaces.Conditions;
 using Application.Interfaces.OrderTypes;
 using Application.Interfaces.PaymentMethods;
 using Application.Interfaces.Status;
@@ -41,6 +42,10 @@ namespace Infrastructure.Dependencies
             // PaymentMethods
             services.AddScoped<IPaymentMethodService, PaymentMethodService>();
             services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
+
+            // Condition
+            services.AddScoped<IConditionService, ConditionService>();
+            services.AddScoped<IConditionRepository, ConditionRepository>();
 
             return services;
         } 
