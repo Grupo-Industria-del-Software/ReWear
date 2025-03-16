@@ -1,6 +1,7 @@
 ﻿using Application.DTOs.Status;
 using Application.Interfaces;
 using Application.Interfaces.Categories;
+using Application.Interfaces.Conditions;
 using Application.Interfaces.OrderTypes;
 using Application.Interfaces.Status;
 using Application.Interfaces.userRoles;
@@ -35,6 +36,10 @@ namespace Infrastructure.Dependencies
             // UserRoles
             services.AddScoped<IUserRolesService, UserRolesService>();
             services.AddScoped<IUserRolesRepository, UserRolesRepository>();
+
+            // Condition
+            services.AddScoped<IConditionService, ConditionService>();
+            services.AddScoped<IConditionRepository, ConditionRepository>();
 
             return services;
         } 
