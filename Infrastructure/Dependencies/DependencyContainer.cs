@@ -2,12 +2,16 @@
 using Application.Interfaces;
 using Application.Interfaces.Categories;
 using Application.Interfaces.Conditions;
+using Application.Interfaces.Department;
+using Application.Interfaces.Municipality;
 using Application.Interfaces.OrderTypes;
 using Application.Interfaces.PaymentMethods;
 using Application.Interfaces.Status;
 using Application.Interfaces.userRoles;
 using Application.Services;
 using Application.Services.CategoryServices;
+using Application.Services.DepartmentService;
+using Application.Services.MunicipalityServices;
 using Application.Services.OrderTypes;
 using Application.Services.PaymentMethods;
 using Domain.Entities;
@@ -46,7 +50,14 @@ namespace Infrastructure.Dependencies
             // Condition
             services.AddScoped<IConditionService, ConditionService>();
             services.AddScoped<IConditionRepository, ConditionRepository>();
+            
+            //Departmnet
+            services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 
+            //Municipality
+            services.AddScoped<IMunicipalityService, MunicipalityService>();
+            services.AddScoped<IMunicipalityRepository, MunicipalityRepository>();
             return services;
         } 
     }
