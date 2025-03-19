@@ -19,7 +19,7 @@ namespace Application.Services
 
         public async Task<TStatusResponseDTO> CreateAsync(TStatusRequestDTO statusRequestDTO)
         {
-            var status = new T { Status = statusRequestDTO.status };
+            var status = new T { Status = statusRequestDTO.Status };
             await _repository.AddAsync(status);
             return new TStatusResponseDTO
             {
@@ -60,7 +60,7 @@ namespace Application.Services
             var status = await _repository.GetByIdAsync(id);
             if (status is null) return false;
             
-            status.Status = statusRequestDTO.status;
+            status.Status = statusRequestDTO.Status;
 
             return await _repository.UpdateAsync(status);
 

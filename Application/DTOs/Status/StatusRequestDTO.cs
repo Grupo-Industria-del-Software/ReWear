@@ -3,6 +3,6 @@ namespace Application.DTOs.Status
 {
     public class StatusRequestDTO
     {
-        public string status {  get; set; }
+        public string Status {  get; set; } = string.Empty;
     }
 }

@@ -8,7 +8,7 @@ namespace Application.DTOs.UserRolesDTO.UserRolesDTO
 {
     public class UserRolesRequestDTO
     {
-        public string Rol { get; set; }
+        public string Rol { get; set; } = string.Empty;
 
     }
 }
