@@ -20,7 +20,7 @@ namespace Infrastructure.Repositories
             return await _context.OrderTypes.ToListAsync();
         }
 
-        public async Task<OrderType> GetByIdAsync(int id)
+        public async Task<OrderType?> GetByIdAsync(int id)
         {
             return await _context.OrderTypes.FindAsync(id);
         }

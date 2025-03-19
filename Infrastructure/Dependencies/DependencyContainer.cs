@@ -1,5 +1,6 @@
 ﻿using Application.DTOs.Status;
 using Application.Interfaces;
+using Application.Interfaces.Auth;
 using Application.Interfaces.Categories;
 using Application.Interfaces.Conditions;
 using Application.Interfaces.Department;
@@ -8,7 +9,9 @@ using Application.Interfaces.OrderTypes;
 using Application.Interfaces.PaymentMethods;
 using Application.Interfaces.Status;
 using Application.Interfaces.userRoles;
+using Application.Interfaces.Utils;
 using Application.Services;
+using Application.Services.Auth;
 using Application.Services.CategoryServices;
 using Application.Services.DepartmentService;
 using Application.Services.MunicipalityServices;
@@ -16,6 +19,7 @@ using Application.Services.OrderTypes;
 using Application.Services.PaymentMethods;
 using Domain.Entities;
 using Infrastructure.Repositories;
+using Infrastructure.Utils;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Dependencies
@@ -58,6 +62,15 @@ namespace Infrastructure.Dependencies
             //Municipality
             services.AddScoped<IMunicipalityService, MunicipalityService>();
             services.AddScoped<IMunicipalityRepository, MunicipalityRepository>();
+            
+            // Auth
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IAuthRepository, AuthRepository>();
+            
+            // Utils
+            services.AddSingleton<IPasswordHasher, PasswordHasher>();
+            services.AddSingleton<IJwtService, JwtService>();
+            
             return services;
         } 
     }

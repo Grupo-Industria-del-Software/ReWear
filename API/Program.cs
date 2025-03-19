@@ -1,14 +1,16 @@
 using API.Config;
+using Infrastructure.Configurations;
 using Infrastructure.Dependencies;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using Infrastructure.Dependencies;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var dbConfig = new DbConfig();
 // Add services to the container.
 builder.Services.AddDbContext<AlqDbContext>(options => options.UseSqlServer(dbConfig.ConnectionString));
+
+builder.Services.AddJwtConfiguration(builder.Configuration);
 
 builder.Services.AddInfrastructure();
 
