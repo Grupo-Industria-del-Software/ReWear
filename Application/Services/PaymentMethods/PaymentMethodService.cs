@@ -23,7 +23,7 @@ namespace Application.Services.PaymentMethods
             });
         }
 
-        public async Task<PaymentMethodResponseDTO> GetByIdAsync(int id)
+        public async Task<PaymentMethodResponseDTO?> GetByIdAsync(int id)
         {
             var paymentMethod = await _paymentMethodRepository.GetByIdAsync(id);
             return paymentMethod is null ? null : new PaymentMethodResponseDTO { Id = paymentMethod.Id, Name = paymentMethod.Name , IsActive = paymentMethod.IsActive};

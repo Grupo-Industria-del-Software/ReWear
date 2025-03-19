@@ -23,7 +23,7 @@ namespace Infrastructure.Repositories
 
             return await query.ToListAsync();
         }
-        public async Task<PaymentMethod> GetByIdAsync(int id)
+        public async Task<PaymentMethod?> GetByIdAsync(int id)
         {
             return await _context.PaymentMethods.FindAsync(id);
         }

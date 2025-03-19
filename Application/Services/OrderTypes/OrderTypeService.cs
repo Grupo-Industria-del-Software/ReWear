@@ -22,7 +22,7 @@ namespace Application.Services.OrderTypes
                 Type = orderType.Type
             });
         }
-        public async Task<OrderTypeResponseDTO> GetByIdAsync(int id)
+        public async Task<OrderTypeResponseDTO?> GetByIdAsync(int id)
         {
             var orderType = await _orderTypeRepository.GetByIdAsync(id);
             return orderType is null ? null : new OrderTypeResponseDTO { Id = orderType.Id, Type = orderType.Type };
