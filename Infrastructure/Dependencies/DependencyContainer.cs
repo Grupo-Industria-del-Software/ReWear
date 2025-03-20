@@ -1,13 +1,13 @@
-﻿using Application.DTOs.Status;
+﻿using Application.DTOs.Catalogs;
 using Application.Interfaces;
 using Application.Interfaces.Auth;
+using Application.Interfaces.Catalogs;
 using Application.Interfaces.Categories;
 using Application.Interfaces.Conditions;
 using Application.Interfaces.Department;
 using Application.Interfaces.Municipality;
 using Application.Interfaces.OrderTypes;
 using Application.Interfaces.PaymentMethods;
-using Application.Interfaces.Status;
 using Application.Interfaces.userRoles;
 using Application.Interfaces.Utils;
 using Application.Services;
@@ -29,11 +29,11 @@ namespace Infrastructure.Dependencies
         public static IServiceCollection AddInfrastructure(this  IServiceCollection services)
         {
             // Status
-            services.AddScoped(typeof(IStatusRepository<>), typeof(StatusRepository<>));
-            services.AddScoped(typeof(IStatusService<,,>), typeof(StatusService<,,>));
+            services.AddScoped(typeof(ICatalogRepository<>), typeof(CatalogRepository<>));
+            services.AddScoped(typeof(ICatalogService<,,>), typeof(CatalogService<,,>));
 
-            services.AddScoped<IStatusService<OrderStatus, StatusRequestDTO, StatusResponseDTO>, StatusService<OrderStatus, StatusRequestDTO, StatusResponseDTO>>();
-            services.AddScoped<IStatusService<PaymentStatus, StatusRequestDTO, StatusResponseDTO>, StatusService<PaymentStatus, StatusRequestDTO, StatusResponseDTO>>();
+            services.AddScoped<ICatalogService<OrderStatus, CatalogRequestDTO, CatalogResponseDTO>, CatalogService<OrderStatus, CatalogRequestDTO, CatalogResponseDTO>>();
+            services.AddScoped<ICatalogService<PaymentStatus, CatalogRequestDTO, CatalogResponseDTO>, CatalogService<PaymentStatus, CatalogRequestDTO, CatalogResponseDTO>>();
 
             // Category
             services.AddScoped<ICategoryService, CategoryService>();

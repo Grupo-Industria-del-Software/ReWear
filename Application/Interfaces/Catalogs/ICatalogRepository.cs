@@ -1,9 +1,9 @@
 ﻿using Domain.Common;
 
-namespace Application.Interfaces.Status
+namespace Application.Interfaces.Catalogs
 {
-    public interface IStatusRepository<T> 
-        where T : EntityStatusCatalog
+    public interface ICatalogRepository<T>
+        where T : EntityCatalog
     {
         Task<IEnumerable<T>> GetAllAsync();
         Task<T?> GetByIdAsync(int id);

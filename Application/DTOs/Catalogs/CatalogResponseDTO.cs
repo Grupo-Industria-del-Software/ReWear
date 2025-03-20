@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Common
+namespace Application.DTOs.Catalogs
 {
-    public abstract class EntityStatusCatalog
+    public class CatalogResponseDTO
     {
         public int Id { get; set; }
-        public string Status { get; set; } = string.Empty;
+        public string Label { get; set; } = string.Empty;
     }
 }

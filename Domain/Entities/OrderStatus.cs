@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class OrderStatus : EntityStatusCatalog
+    public class OrderStatus : EntityCatalog
     {
     }
 }

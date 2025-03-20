@@ -1,11 +1,11 @@
-﻿using Application.DTOs.Status;
-using Application.Interfaces.Status;
+﻿using Application.DTOs.Catalogs;
+using Application.Interfaces.Catalogs;
 using Domain.Entities;
 
 namespace API.Controllers
 {
-    public class OrderStatusController : StatusController<OrderStatus, StatusRequestDTO, StatusResponseDTO>
+    public class OrderStatusController : CatalogController<OrderStatus, CatalogRequestDTO, CatalogResponseDTO>
     {
-        public OrderStatusController(IStatusService<OrderStatus, StatusRequestDTO, StatusResponseDTO> service) : base(service) { }
+        public OrderStatusController(ICatalogService<OrderStatus, CatalogRequestDTO, CatalogResponseDTO> service) : base(service) { }
     }
 }

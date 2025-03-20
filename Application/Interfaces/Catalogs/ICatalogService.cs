@@ -1,12 +1,12 @@
-﻿using Application.DTOs.Status;
+﻿using Application.DTOs.Catalogs;
 using Domain.Common;
 
-namespace Application.Interfaces.Status
+namespace Application.Interfaces.Catalogs
 {
-    public interface IStatusService<T, TStatusRequestDTO, TStatusResponseDTO>
-        where T: EntityStatusCatalog
-        where TStatusRequestDTO: StatusRequestDTO
-        where TStatusResponseDTO: StatusResponseDTO
+    public interface ICatalogService<T, TStatusRequestDTO, TStatusResponseDTO>
+        where T : EntityCatalog
+        where TStatusRequestDTO : CatalogRequestDTO
+        where TStatusResponseDTO : CatalogResponseDTO
     {
         Task<IEnumerable<TStatusResponseDTO>> GetAllAsync();
         Task<TStatusResponseDTO?> GetByIdAsync(int id);
