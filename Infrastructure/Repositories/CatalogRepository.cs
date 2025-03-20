@@ -26,13 +26,13 @@ namespace Infrastructure.Repositories
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var status = await _dbSet.FindAsync(id);
-            if(status == null)
+            var catalog = await _dbSet.FindAsync(id);
+            if(catalog == null)
             {
                 return false;
             }
 
-            _dbSet.Remove(status);
+            _dbSet.Remove(catalog);
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
