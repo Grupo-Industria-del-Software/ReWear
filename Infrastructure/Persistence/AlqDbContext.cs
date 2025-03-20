@@ -14,6 +14,7 @@ namespace Infrastructure.Persistence
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<OrderStatus> OrderStatus { get; set; }
         public DbSet<PaymentStatus> PaymentStatus { get; set; }
+        public DbSet<ProductStatus> ProductStatus { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<UserRoles> UserRoles { get; set; }
         public DbSet<Condition> Conditions { get; set; }

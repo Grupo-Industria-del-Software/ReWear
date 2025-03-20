@@ -1,18 +1,18 @@
-﻿using Application.Interfaces.Status;
+﻿using Application.Interfaces.Catalogs;
 using Domain.Common;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
-    public class StatusRepository<T> : IStatusRepository<T>
-        where T : EntityStatusCatalog
+    public class CatalogRepository<T> : ICatalogRepository<T>
+        where T : EntityCatalog
     {
 
         private readonly AlqDbContext _dbContext;
         private readonly DbSet<T> _dbSet;
 
-        public StatusRepository(AlqDbContext dbContext)
+        public CatalogRepository(AlqDbContext dbContext)
         {
             _dbContext = dbContext;
             _dbSet = dbContext.Set<T>();

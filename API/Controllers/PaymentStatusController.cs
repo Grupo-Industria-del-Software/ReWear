@@ -1,11 +1,11 @@
-﻿using Application.DTOs.Status;
-using Application.Interfaces.Status;
+﻿using Application.DTOs.Catalogs;
+using Application.Interfaces.Catalogs;
 using Domain.Entities;
 
 namespace API.Controllers
 {
-    public class PaymentStatusController : StatusController<PaymentStatus, StatusRequestDTO, StatusResponseDTO>
+    public class PaymentStatusController : CatalogController<PaymentStatus, CatalogRequestDTO, CatalogResponseDTO>
     {
-        public PaymentStatusController(IStatusService<PaymentStatus, StatusRequestDTO, StatusResponseDTO> service) : base(service) { } 
+        public PaymentStatusController(ICatalogService<PaymentStatus, CatalogRequestDTO, CatalogResponseDTO> service) : base(service) { } 
     }
 }
