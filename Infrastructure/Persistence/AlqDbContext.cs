@@ -1,3 +1,4 @@
+using Domain.AggregateRoots.Products;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,6 +29,9 @@ namespace Infrastructure.Persistence
         public DbSet<Department> Departments { get; set; }
         public DbSet<Municipality> Municipalities { get; set; }
         
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
+        
         public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -44,7 +48,34 @@ namespace Infrastructure.Persistence
                 .HasForeignKey(u => u.RoleId)
                 .OnDelete(DeleteBehavior.Cascade);
             
-            // Value objects
+            // Aggregate
+            // product -> user
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.User)
+                .WithMany()
+                .HasForeignKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+            
+            // product -> category
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.Category)
+                .WithMany()
+                .HasForeignKey(p => p.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            modelBuilder.Entity<ProductImage>()
+                .HasOne(i => i.Product)
+                .WithMany(p => p.ProductImages)
+                .HasForeignKey(i => i.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
+            
+            modelBuilder.Entity<Product>()
+                .Property(p => p.Price)
+                .HasPrecision(18, 2);
+            
+            modelBuilder.Entity<Product>()
+                .Property(p => p.RentalPrice)
+                .HasPrecision(18, 2);
         }
     }
 }
