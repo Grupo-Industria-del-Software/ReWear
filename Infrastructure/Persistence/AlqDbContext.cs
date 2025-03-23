@@ -74,7 +74,7 @@ namespace Infrastructure.Persistence
                 .HasPrecision(18, 2);
             
             modelBuilder.Entity<Product>()
-                .Property(p => p.RentalPrice)
+                .Property(p => p.PricePerDay)
                 .HasPrecision(18, 2);
         }
     }
