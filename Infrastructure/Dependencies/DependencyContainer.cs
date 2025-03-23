@@ -5,11 +5,14 @@ using Application.Interfaces.Catalogs;
 using Application.Interfaces.Categories;
 using Application.Interfaces.Conditions;
 using Application.Interfaces.Department;
+using Application.Interfaces.Mappers;
 using Application.Interfaces.Municipality;
 using Application.Interfaces.OrderTypes;
 using Application.Interfaces.PaymentMethods;
+using Application.Interfaces.Products;
 using Application.Interfaces.userRoles;
 using Application.Interfaces.Utils;
+using Application.Mappers;
 using Application.Services;
 using Application.Services.Auth;
 using Application.Services.CategoryServices;
@@ -17,6 +20,7 @@ using Application.Services.DepartmentService;
 using Application.Services.MunicipalityServices;
 using Application.Services.OrderTypes;
 using Application.Services.PaymentMethods;
+using Application.Services.Products;
 using Domain.Entities;
 using Infrastructure.Repositories;
 using Infrastructure.Utils;
@@ -71,6 +75,12 @@ namespace Infrastructure.Dependencies
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddSingleton<IJwtService, JwtService>();
             
+            // Products
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            
+            // Mappers
+            services.AddScoped<IProductMapper, ProductMapper>();
             return services;
         } 
     }

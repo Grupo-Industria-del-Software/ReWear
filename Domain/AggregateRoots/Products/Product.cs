@@ -27,8 +27,8 @@ public class Product : AggregateRoot
     public string Description { get; set; } = string.Empty;
     public bool IsForSale { get; set; }
     public bool IsForRental { get; set; }
-    public decimal Price { get; set; }
-    public decimal RentalPrice { get; set; }
+    public decimal? Price { get; set; }
+    public decimal? PricePerDay { get; set; }
     
     public List<ProductImage> ProductImages { get; set; } = new();
 }
