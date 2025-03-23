@@ -1,10 +1,7 @@
-using Application.DTOs.Auth;
-using Application.DTOs.Catalogs;
-using Application.DTOs.CategoriesDTO;
-using Application.DTOs.ConditionsDTOs;
 using Application.DTOs.Products;
 using Application.Interfaces.Mappers;
 using Application.Interfaces.Products;
+using Application.Specifications;
 using Domain.AggregateRoots.Products;
 
 namespace Application.Services.Products;
@@ -20,9 +17,21 @@ public class ProductService : IProductService
         _mapper = mapper;
     }
     
-    public async Task<IEnumerable<ProductResponseDto>> GetAllAsync()
+    public async Task<IEnumerable<ProductResponseDto>> GetAllAsync(ProductFilterDto filterDto)
     {
-        var products = await _repository.GetAllAsync();
+        var spec = new ProductSpecification
+        (
+            filterDto.SizeId,
+            filterDto.BrandId,
+            filterDto.ConditionId,
+            filterDto.CategoryId,
+            filterDto.IsForRental,
+            filterDto.IsForSale,
+            filterDto.MinPrice,
+            filterDto.MaxPrice
+        );
+        
+        var products = await _repository.GetAllAsync(spec);
         return products.Select(p => _mapper.ToDto(p)).ToList();
     }
 
@@ -61,28 +70,31 @@ public class ProductService : IProductService
         return _mapper.ToDto(product);
     }
 
-    public async Task<bool> UpdateAsync(int id, ProductRequestDto dto)
+    public async Task<bool> UpdateAsync(int id, ProductUpdateRequestDto dto)
     {
         var product = await _repository.GetByIdAsync(id);
-        if  (product == null) return false;
+        if (product == null) return false;
         
-        product.BrandId = dto.BrandId;
-        product.CategoryId = dto.CategoryId;
-        product.ConditionId = dto.ConditionId;
-        product.SizeId = dto.SizeId;
-        product.Name = dto.Name;
-        product.Description = dto.Description;
-        product.IsForSale = dto.IsForSale;
-        product.IsForRental = dto.IsForRental;
-        product.Price = dto.Price;
-        product.PricePerDay = dto.PricePerDay;
+        product.CategoryId = dto.CategoryId ?? product.CategoryId;
+        product.ConditionId = dto.ConditionId ?? product.ConditionId;
+        product.SizeId = dto.SizeId ?? product.SizeId;
+        product.BrandId = dto.BrandId ?? product.BrandId;
+        product.Name = string.IsNullOrWhiteSpace(dto.Name) ? product.Name : dto.Name;
+        product.Description = string.IsNullOrWhiteSpace(dto.Description) ? product.Description : dto.Description;
+        product.Price = dto.Price ?? product.Price;
+        product.PricePerDay = dto.PricePerDay ?? product.PricePerDay;
+        product.IsForSale = dto.IsForSale ?? product.IsForSale;
+        product.IsForRental = dto.IsForRental ?? product.IsForRental;
         
-        product.ProductImages.Clear();
-        product.ProductImages.AddRange(dto.ProductImages.Select(i => new ProductImage
+        if (dto.ProductImages != null && dto.ProductImages.Any())
         {
-            ImageUrl = i.ImageUrl,
-        }));
-        
+            product.ProductImages.Clear();
+            product.ProductImages.AddRange(dto.ProductImages.Select(i => new ProductImage
+            {
+                ImageUrl = i.ImageUrl
+            }));
+        }
+
         return await _repository.UpdateAsync(product);
     }
 
@@ -91,4 +103,5 @@ public class ProductService : IProductService
     {
         return _repository.DeleteAsync(id);
     }
+
 }
