@@ -1,6 +1,7 @@
 using System.Linq.Expressions;
 using Application.Interfaces.Products;
 using Domain.AggregateRoots.Products;
+using Domain.Common;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,10 +16,11 @@ public class ProductRepository : IProductRepository
         _context = context; 
     }
     
-    public async Task<IEnumerable<Product>> GetAllAsync(Expression<Func<Product, bool>>? filter = null)
+    public async Task<IEnumerable<Product>> GetAllAsync(ISpecification<Product> spec)
     {
         IQueryable<Product> query = _context.Products
             .AsNoTracking()
+            .Where(spec.Criteria)
             .Include(p => p.ProductImages)
             .Include(p => p.User)
             .Include(p => p.Category)
@@ -26,9 +28,6 @@ public class ProductRepository : IProductRepository
             .Include(p => p.Size)
             .Include(p => p.Brand)
             .Include(p => p.ProductStatus);
-
-        if(filter != null)
-            query = query.Where(filter);
         
         return await query.ToListAsync();
     }

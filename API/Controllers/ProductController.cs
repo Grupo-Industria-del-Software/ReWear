@@ -17,9 +17,11 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll(
+        [FromQuery]  ProductFilterDto filterDto
+        )
     {
-        var products = await _service.GetAllAsync();
+        var products = await _service.GetAllAsync(filterDto);
         return Ok(products);
     }
 
@@ -33,10 +35,21 @@ public class ProductController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] ProductRequestDto dto)
     {
-        if (dto is null)
-            return BadRequest("Los datos son requeridos");
-        
         var  product = await _service.CreateAsync(dto);
         return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
+    }
+
+    [HttpPatch ("{id}")]
+    public async Task<IActionResult> Update(int id,[FromBody] ProductUpdateRequestDto dto)
+    {
+        var updated = await _service.UpdateAsync(id, dto);
+        return updated ? NoContent() : NotFound();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var deleted = await _service.DeleteAsync(id);
+        return deleted ? NoContent() : NotFound();
     }
 }
