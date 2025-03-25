@@ -1,29 +1,30 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using Application.Interfaces.Utils;
 using Domain.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Infrastructure.Utils;
+namespace Infrastructure.Providers;
 
-public class JwtService: IJwtService
+public class JwtProvider : IJwtService
 {
     private readonly string _secret;
     private readonly string _issuer;
     private readonly string _audience;
     private readonly int _expireMinutes;
 
-    public JwtService(IConfiguration config)
+    public JwtProvider(IConfiguration config)
     {
         _secret = config["JwtSettings:Secret"]!;
         _issuer = config["JwtSettings:Issuer"]!;
         _audience = config["JwtSettings:Audience"]!;
         _expireMinutes = int.Parse(config["JwtSettings:ExpireMinutes"]!);
-        
+
     }
-    
+
     public string GenerateJwtToken(User user)
     {
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secret));
@@ -36,17 +37,18 @@ public class JwtService: IJwtService
             new Claim(JwtRegisteredClaimNames.Email, user.Email),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
         };
-        
+
         var expires = DateTime.Now.AddMinutes(_expireMinutes);
 
-        var token = new JwtSecurityToken(  
+        var token = new JwtSecurityToken(
             issuer: _issuer,
             audience: _audience,
             claims: claims,
             expires: expires,
             signingCredentials: creds
         );
-        
+
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
+    
 }

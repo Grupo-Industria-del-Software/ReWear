@@ -34,14 +34,17 @@ namespace Infrastructure.Persistence
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         
+        public DbSet<Subscription> Subscriptions { get; set; }
+        
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Municipality>()
-                .HasOne(m => m.Department)  // Propiedad de navegación en Municipality
-                .WithMany(d => d.municipalities) // Propiedad de navegación en Department
-                .HasForeignKey(m => m.DepartmentId) // Llave foránea en Municipality
+                .HasOne(m => m.Department)  
+                .WithMany(d => d.municipalities)
+                .HasForeignKey(m => m.DepartmentId)
                 .OnDelete(DeleteBehavior.Cascade); 
             
             modelBuilder.Entity<User>()
@@ -95,6 +98,27 @@ namespace Infrastructure.Persistence
             modelBuilder.Entity<RentalApplication>()
                 .Property(ra => ra.TotalPrice)
                 .HasPrecision(18, 2);
+            
+            modelBuilder.Entity<Subscription>()
+                .Property(s => s.Price)
+                .HasPrecision(18, 2);
+            
+            modelBuilder.Entity<Subscription>()
+                .HasOne(s => s.User)
+                .WithOne(u => u.Subscription)
+                .HasForeignKey<Subscription>(s => s.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+            
+            //RefreshToken
+            modelBuilder.Entity<RefreshToken>()
+                .HasOne(rt => rt.User)
+                .WithMany(u => u.RefreshTokens)
+                .HasForeignKey(rt => rt.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+            
+            modelBuilder.Entity<RefreshToken>()
+                .HasIndex(rt => rt.Token)
+                .IsUnique();
         }
     }
 }

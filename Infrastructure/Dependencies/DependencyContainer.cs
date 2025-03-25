@@ -11,7 +11,10 @@ using Application.Interfaces.OrderTypes;
 using Application.Interfaces.PaymentMethods;
 using Application.Interfaces.Products;
 using Application.Interfaces.RentalApplications;
+using Application.Interfaces.RefreshTokens;
+using Application.Interfaces.Subscriptions;
 using Application.Interfaces.userRoles;
+using Application.Interfaces.Users;
 using Application.Interfaces.Utils;
 using Application.Mappers;
 using Application.Services;
@@ -25,6 +28,10 @@ using Application.Services.Products;
 using Application.Services.RentalApplications;
 using Domain.Entities;
 using Infrastructure.Persistence.Repositories;
+using Application.Services.RefreshTokens;
+using Domain.Entities;
+using Infrastructure.Payments;
+using Infrastructure.Providers;
 using Infrastructure.Repositories;
 using Infrastructure.Utils;
 using Microsoft.Extensions.DependencyInjection;
@@ -73,11 +80,10 @@ namespace Infrastructure.Dependencies
             
             // Auth
             services.AddScoped<IAuthService, AuthService>();
-            services.AddScoped<IAuthRepository, AuthRepository>();
             
             // Utils
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
-            services.AddSingleton<IJwtService, JwtService>();
+            services.AddSingleton<IJwtService, JwtProvider>();
             
             // Products
             services.AddScoped<IProductService, ProductService>();
@@ -91,6 +97,17 @@ namespace Infrastructure.Dependencies
             //RentalApplications
             services.AddScoped<IRentalApplicationService, RentalApplicationService>();
             services.AddScoped<IRentalApplicationRepository, RentalApplicationRepository>();
+            
+            // Payments
+            services.AddScoped<IPaymentService, StripePaymentService>();
+            services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+            
+            // Users
+            services.AddScoped<IUserRepository, UserRepository>();
+            
+            // Tokens
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddScoped<IRefreshTokenService, RefreshTokenService>();
             return services;
         } 
     }
