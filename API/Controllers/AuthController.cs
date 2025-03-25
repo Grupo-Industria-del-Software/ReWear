@@ -1,4 +1,5 @@
 using Application.DTOs.Auth;
+using Application.DTOs.RefreshTokens;
 using Application.Interfaces.Auth;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,6 +37,18 @@ public class AuthController : ControllerBase
         }
         
         var response = await _authService.LoginAsync(loginRequestDto);
+        return response is null ? Unauthorized() : Ok(response);
+    }
+
+    [HttpPost("refresh-token")]
+    public async Task<IActionResult> RefreshToken([FromBody] ReLoginTokenRequestDto dto)
+    {
+        if (dto is null)
+        {
+            return BadRequest("Invalid request");
+        }
+        
+        var response = await _authService.RefreshTokenAsync(dto);
         return response is null ? Unauthorized() : Ok(response);
     }
 }
