@@ -12,6 +12,7 @@ var dbConfig = new DbConfig();
 builder.Services.AddDbContext<AlqDbContext>(options => options.UseSqlServer(dbConfig.ConnectionString));
 
 builder.Services.AddJwtConfiguration(builder.Configuration);
+StripeConfiguration.ConfigureStripe(builder.Configuration);
 
 builder.Services.AddInfrastructure();
 

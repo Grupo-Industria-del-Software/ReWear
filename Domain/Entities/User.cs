@@ -15,6 +15,10 @@ public class User : Entity
     public string ProfilePicture { get; set; }
     public bool Active { get; set; }
     
+    public Subscription? Subscription { get; set; }
+    
+    public List<RefreshToken> RefreshTokens { get; set; } = new();
+    
     private User() { }
     
     public User(string firstName, string lastName, string email, string password, int roleId, string phoneNumber, string profilePicture, bool active)
