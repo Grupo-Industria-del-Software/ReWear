@@ -20,10 +20,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", builder =>
     {
-        builder.WithOrigins("http://localhost:3003") // Dirección del frontend
+        builder.WithOrigins("http://localhost:3001") // Dirección del frontend
                .AllowAnyMethod() // Permite todos los métodos HTTP (GET, POST, PUT, DELETE, etc.)
-               .AllowAnyHeader() // Permite todos los encabezados
-               .AllowCredentials(); // Permite credenciales (opcional, si usas autenticación)
+               .AllowAnyHeader() 
+               .AllowCredentials(); 
     });
 });
 
