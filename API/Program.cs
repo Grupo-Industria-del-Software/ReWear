@@ -20,6 +20,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("RequireSellerRole", policy => policy.RequireRole("Seller"));
+    options.AddPolicy("RequireCustomerRole", policy => policy.RequireRole("Customer"));
+    options.AddPolicy("SellerOrCustomer", policy => policy.RequireRole("Seller", "Customer"));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

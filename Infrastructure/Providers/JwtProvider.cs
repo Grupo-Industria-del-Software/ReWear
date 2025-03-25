@@ -34,6 +34,7 @@ public class JwtProvider : IJwtService
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.Name, $"{user.FirstName}  {user.LastName}"),
+            new Claim(ClaimTypes.Role, user.Role.Rol),
             new Claim(JwtRegisteredClaimNames.Email, user.Email),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
         };

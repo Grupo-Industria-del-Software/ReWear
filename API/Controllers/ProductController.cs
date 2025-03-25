@@ -1,5 +1,6 @@
 using Application.DTOs.Products;
 using Application.Interfaces.Products;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +18,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "Customer")]
     public async Task<IActionResult> GetAll(
         [FromQuery]  ProductFilterDto filterDto
         )
