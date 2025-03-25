@@ -22,7 +22,9 @@ public class UserRepository :  IUserRepository
 
     public async Task<User?> GetByEmail(string email)
     {
-        return await _context.Users.SingleOrDefaultAsync(u => u.Email == email);
+        return await _context.Users
+            .Include(u => u.Role)
+            .SingleOrDefaultAsync(u => u.Email == email);
     }
 
     public async Task<User?> GetByRefreshToken(string refreshToken)
