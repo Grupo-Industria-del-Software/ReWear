@@ -16,9 +16,7 @@ namespace Infrastructure.Persistence
         public DbSet<OrderStatus> OrderStatus { get; set; }
         public DbSet<PaymentStatus> PaymentStatus { get; set; }
         public DbSet<ProductStatus> ProductStatus { get; set; }
-        public DbSet<RentalApplication> RentalApplications { get; set; }
-        public DbSet<RentalApplicationStatus> RentalApplicationStatus { get; set; }
-
+        
         public DbSet<Size> Sizes { get; set; }
         
         public DbSet<Brand> Brands { get; set; }
@@ -80,23 +78,6 @@ namespace Infrastructure.Persistence
             
             modelBuilder.Entity<Product>()
                 .Property(p => p.PricePerDay)
-                .HasPrecision(18, 2);
-
-            modelBuilder.Entity<RentalApplication>(entity =>
-            {
-                entity.HasOne(ra => ra.ProductOwnerUser)
-                      .WithMany()
-                      .HasForeignKey(ra => ra.ProductOwnerUserId)
-                      .OnDelete(DeleteBehavior.NoAction); 
-
-                entity.HasOne(ra => ra.RequesterUser)
-                      .WithMany()
-                      .HasForeignKey(ra => ra.RequesterUserId)
-                      .OnDelete(DeleteBehavior.NoAction); 
-            });
-
-            modelBuilder.Entity<RentalApplication>()
-                .Property(ra => ra.TotalPrice)
                 .HasPrecision(18, 2);
             
             modelBuilder.Entity<Subscription>()
