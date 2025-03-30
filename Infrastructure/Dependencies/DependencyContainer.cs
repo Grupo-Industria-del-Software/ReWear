@@ -1,5 +1,4 @@
 ﻿using Application.DTOs.Catalogs;
-using Application.Interfaces;
 using Application.Interfaces.Auth;
 using Application.Interfaces.Catalogs;
 using Application.Interfaces.Categories;
@@ -25,6 +24,7 @@ using Application.Services.OrderTypes;
 using Application.Services.PaymentMethods;
 using Application.Services.Products;
 using Application.Services.RefreshTokens;
+using Application.Services.Subscriptions;
 using Domain.Entities;
 using Infrastructure.Payments;
 using Infrastructure.Providers;
@@ -89,7 +89,9 @@ namespace Infrastructure.Dependencies
             
             // Payments
             services.AddScoped<IPaymentService, StripePaymentService>();
+            
             services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+            services.AddScoped<ISubscriptionService, SubscriptionService>();
             
             // Users
             services.AddScoped<IUserRepository, UserRepository>();
@@ -97,6 +99,7 @@ namespace Infrastructure.Dependencies
             // Tokens
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+            
             return services;
         } 
     }
