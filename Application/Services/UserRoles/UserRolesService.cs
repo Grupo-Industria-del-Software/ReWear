@@ -1,10 +1,8 @@
-﻿using Application.Interfaces;
-using Application.DTOs.UserRolesDTO;
+﻿using Application.DTOs.UserRolesDTO;
 using Application.DTOs.UserRolesDTO.UserRolesDTO;
 using Application.Interfaces.userRoles;
-using Domain.Entities;
 
-namespace Application.Services
+namespace Application.Services.UserRoles
 {
     public class UserRolesService : IUserRolesService
     {
@@ -29,7 +27,7 @@ namespace Application.Services
 
         public async Task<UserRolesResponseDTO> CreateAsync(UserRolesRequestDTO dto)
         {
-            var userRole = new UserRoles(dto.Rol);
+            var userRole = new Domain.Entities.UserRoles(dto.Rol);
             await _userRolesRepository.AddAsync(userRole);
             return new UserRolesResponseDTO { Id = userRole.Id, Rol = userRole.Rol };
         }

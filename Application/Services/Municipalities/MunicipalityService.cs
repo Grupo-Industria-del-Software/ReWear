@@ -2,7 +2,7 @@ using Application.DTOs.MunicipalityDTO;
 using Application.Interfaces.Municipality;
 using Domain.Entities;
 
-namespace Application.Services.MunicipalityServices;
+namespace Application.Services.Municipalities;
 
 public class MunicipalityService:IMunicipalityService
 {

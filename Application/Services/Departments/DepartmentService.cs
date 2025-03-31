@@ -1,12 +1,11 @@
 using Application.DTOs.DepartmentDTO;
 using Application.Interfaces.Department;
-using Domain.Entities;
 
-namespace Application.Services.DepartmentService;
+namespace Application.Services.Departments;
 
 public class DepartmentService : IDepartmentService
 {
-    public readonly IDepartmentRepository _repository;
+    private readonly IDepartmentRepository _repository;
 
     public DepartmentService(IDepartmentRepository repository)
     {
