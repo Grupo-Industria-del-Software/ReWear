@@ -2,10 +2,12 @@
 using Application.Interfaces.Auth;
 using Application.Interfaces.Catalogs;
 using Application.Interfaces.Categories;
+using Application.Interfaces.Chat;
 using Application.Interfaces.Cloudinary;
 using Application.Interfaces.Conditions;
 using Application.Interfaces.Department;
 using Application.Interfaces.Mappers;
+using Application.Interfaces.Message;
 using Application.Interfaces.Municipality;
 using Application.Interfaces.Orders;
 using Application.Interfaces.PaymentMethods;
@@ -20,6 +22,7 @@ using Application.Services;
 using Application.Services.Auth;
 using Application.Services.Orders;
 using Application.Services.Categories;
+using Application.Services.Chat;
 using Application.Services.Conditions;
 using Application.Services.Departments;
 using Application.Services.Municipalities;
@@ -104,6 +107,12 @@ namespace Infrastructure.Dependencies
             //Cloudinary
             services.AddScoped<ICloudinaryService, CloudinaryService>();
 
+            //Chat 
+            services.AddScoped<IChatService, ChatService>();
+            services.AddScoped<IChatRepository, ChatRepository>();
+            
+            //Message
+            services.AddScoped<IMessageRepository, MessageRepository>();
             return services;
         } 
     }
