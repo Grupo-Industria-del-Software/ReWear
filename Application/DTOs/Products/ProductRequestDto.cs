@@ -13,8 +13,7 @@ public class ProductRequestDto
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public decimal Price { get; set; }
-    public decimal PricePerDay { get; set; }
+    public decimal? PricePerDay { get; set; }
     public bool IsForSale { get; set; }
     public bool IsForRental { get; set; }
-    public List<ProductImageRequestDto> ProductImages { get; set; } = new();
 }

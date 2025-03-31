@@ -8,4 +8,6 @@ public class ProductImage : Entity
     public Product? Product { get; set; }
     
     public string ImageUrl { get; set; } = string.Empty;
+    
+    public string PublicId { get; set; } = string.Empty;
 }

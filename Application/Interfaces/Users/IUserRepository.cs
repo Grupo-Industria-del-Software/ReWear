@@ -9,4 +9,5 @@ public interface IUserRepository
     Task<User?> GetById(int id);
     Task<bool> UpdateAsync(User user);
     Task<User?> GetByRefreshToken(string refreshToken);
+    Task<User?> GetByIdAsync(int id);
 }

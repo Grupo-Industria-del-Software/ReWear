@@ -1,4 +1,5 @@
 using Application.DTOs.Users;
+using Application.DTOs.Auth;
 using Application.Interfaces.Users;
 
 namespace Application.Services.Users;
@@ -27,5 +28,18 @@ public class UserService : IUserService
         user.ProfilePicture = dto.ProfilePicture  ??  user.ProfilePicture;
         
         return await _repository.UpdateAsync(user);
+
+
+    public async Task<UserResponseDTO?> GetByIdAsync(int id)
+    {
+        var user = await _repository.GetByIdAsync(id);
+        return user is null
+            ? null
+            : new UserResponseDTO()
+            {
+                Id = user.Id, 
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+            };
     }
 }
