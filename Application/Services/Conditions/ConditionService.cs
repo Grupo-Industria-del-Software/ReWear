@@ -3,7 +3,7 @@ using Application.DTOs.ConditionsDTOs;
 using Application.Interfaces.Conditions;
 using Domain.Entities;
 
-namespace Application.Services
+namespace Application.Services.Conditions
 {
     public class ConditionService : IConditionService
     {
