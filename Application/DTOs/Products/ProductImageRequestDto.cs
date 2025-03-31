@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Http;
+
 namespace Application.DTOs.Products;
 
 public class ProductImageRequestDto
 {
-    public string ImageUrl { get; set; } =  string.Empty;
+    public IFormFile ImageFile { get; set; } 
 }

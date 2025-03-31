@@ -1,10 +1,12 @@
 using Application.DTOs.Auth;
 using Application.DTOs.RefreshTokens;
 using Application.Interfaces.Auth;
+using Application.Interfaces.Cloudinary;
 using Application.Interfaces.RefreshTokens;
 using Application.Interfaces.Users;
 using Application.Interfaces.Utils;
 using Domain.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.Services.Auth;
 
@@ -14,18 +16,42 @@ public class AuthService : IAuthService
     private readonly IRefreshTokenService _refreshTokenService;
     private readonly IPasswordHasher _hasher;
     private readonly IJwtService  _jwtService;
+    private readonly ICloudinaryService _cloudinaryService;
     
-    public AuthService(IUserRepository repository, IPasswordHasher hasher, IJwtService jwtService,  IRefreshTokenService refreshTokenService)
+    public AuthService(IUserRepository repository, IPasswordHasher hasher, IJwtService jwtService,  IRefreshTokenService refreshTokenService, ICloudinaryService cloudinaryService)
     {
         _repository = repository;
         _refreshTokenService = refreshTokenService;
         _hasher = hasher;
         _jwtService = jwtService;
+        _cloudinaryService = cloudinaryService;
     }
     
-    public async Task<RegisterResponseDto> RegisterAsync(RegisterRequestDto registerRequestDto)
+    public async Task<RegisterResponseDto> RegisterAsync(RegisterRequestDto registerRequestDto, IFormFile profilePicture)
     {
         var newPass = _hasher.HashPassword(registerRequestDto.Password);
+        
+        string profilePicUrl = null;
+        string cloudinaryPublicId = null;
+
+        // Si se ha enviado una imagen de perfil, se procesa
+        if (profilePicture != null && profilePicture.Length > 0)
+        {
+            // Guardar el archivo en una ruta temporal
+            var tempFilePath = Path.GetTempFileName();
+            using (var stream = new FileStream(tempFilePath, FileMode.Create))
+            {
+                await profilePicture.CopyToAsync(stream);
+            }
+
+            // Subir la imagen a Cloudinary
+            var uploadResult = await _cloudinaryService.UploadImageAsync(tempFilePath);
+            profilePicUrl = uploadResult.Url;
+            cloudinaryPublicId = uploadResult.PublicId;
+
+            // Eliminar el archivo temporal
+            File.Delete(tempFilePath);
+        }
         
         var user = new User(
             registerRequestDto.FirstName, 
@@ -34,11 +60,12 @@ public class AuthService : IAuthService
             newPass,
             registerRequestDto.RoleId,
             registerRequestDto.PhoneNumber,
-            registerRequestDto.ProfilePicture,
+            profilePicUrl,
             true
         );
-        
+        user.CloudinaryPublicId = cloudinaryPublicId;
         await _repository.AddAsync(user);
+        
 
         return new RegisterResponseDto
         {
@@ -48,6 +75,7 @@ public class AuthService : IAuthService
             Email = user.Email,
             PhoneNumber = user.PhoneNumber,
             RoleId = user.RoleId,
+            ProfilePicture = profilePicUrl,
         };
     }
 
@@ -101,5 +129,6 @@ public class AuthService : IAuthService
             RefreshToken = newRefreshToken.Token
         };
     }
+    
     
 }

@@ -35,9 +35,9 @@ public class ProductController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] ProductRequestDto dto)
+    public async Task<IActionResult> Create([FromForm] ProductRequestDto dto, [FromForm] List<IFormFile> images)
     {
-        var  product = await _service.CreateAsync(dto);
+        var  product = await _service.CreateAsync(dto, images);
         return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
     }
 

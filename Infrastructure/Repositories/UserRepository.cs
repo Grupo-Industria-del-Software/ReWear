@@ -33,4 +33,9 @@ public class UserRepository :  IUserRepository
             .Include(u => u.RefreshTokens)
             .FirstOrDefaultAsync(u => u.RefreshTokens.Any(t => t.Token == refreshToken && !t.IsUsed));
     }
+    
+    public async Task<User?> GetByIdAsync(int id)
+    {
+        return await _context.Users.FindAsync(id);
+    }
 }
