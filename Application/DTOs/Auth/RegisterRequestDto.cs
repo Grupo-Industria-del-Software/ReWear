@@ -9,5 +9,4 @@ public class RegisterRequestDto
     public string PhoneNumber { get; set; } = string.Empty;
     public int RoleId { get; set; }
     public string ProfilePicture { get; set; } = string.Empty;
-    
 }
