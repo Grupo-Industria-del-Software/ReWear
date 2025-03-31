@@ -8,5 +8,5 @@ public class RegisterRequestDto
     public string Password { get; set; } = string.Empty;
     public string PhoneNumber { get; set; } = string.Empty;
     public int RoleId { get; set; }
-    
+    public string ProfilePicture { get; set; } = string.Empty;
 }

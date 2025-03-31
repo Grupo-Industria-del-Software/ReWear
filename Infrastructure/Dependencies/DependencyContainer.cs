@@ -7,6 +7,7 @@ using Application.Interfaces.Conditions;
 using Application.Interfaces.Department;
 using Application.Interfaces.Mappers;
 using Application.Interfaces.Municipality;
+using Application.Interfaces.Orders;
 using Application.Interfaces.OrderTypes;
 using Application.Interfaces.PaymentMethods;
 using Application.Interfaces.Products;
@@ -18,6 +19,7 @@ using Application.Interfaces.Utils;
 using Application.Mappers;
 using Application.Services;
 using Application.Services.Auth;
+using Application.Services.Orders;
 using Application.Services.Categories;
 using Application.Services.Conditions;
 using Application.Services.Departments;
@@ -91,7 +93,8 @@ namespace Infrastructure.Dependencies
             
             // Mappers
             services.AddScoped<IProductMapper, ProductMapper>();
-            
+            services.AddScoped<IOrderMapper, OrderMapper>();
+
             // Payments
             services.AddScoped<IPaymentService, StripePaymentService>();
             
@@ -105,6 +108,10 @@ namespace Infrastructure.Dependencies
             // Tokens
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+
+            // Orders
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
             
             //Cloudinary
             services.AddScoped<ICloudinaryService, CloudinaryService>();
