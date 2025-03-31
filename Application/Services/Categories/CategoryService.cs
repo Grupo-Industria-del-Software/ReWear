@@ -2,7 +2,7 @@ using Application.DTOs.CategoriesDTO;
 using Application.Interfaces.Categories;
 using Domain.Entities;
 
-namespace Application.Services.CategoryServices;
+namespace Application.Services.Categories;
 
 public class CategoryService :  ICategoryService
 {

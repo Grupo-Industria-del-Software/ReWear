@@ -1,9 +1,8 @@
 ﻿using Application.DTOs.OrderTypes;
 using Application.Interfaces.OrderTypes;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers.OrderTypes
+namespace API.Controllers
 {
     [ApiController]
     [Route("/api/OrderType")]

@@ -27,6 +27,18 @@ public class UserRepository :  IUserRepository
             .SingleOrDefaultAsync(u => u.Email == email);
     }
 
+    public async Task<User?> GetById(int id)
+    {
+        return await _context.Users
+            .FindAsync(id);
+    }
+
+    public async Task<bool> UpdateAsync(User user)
+    {
+        _context.Users.Update(user);
+        return await _context.SaveChangesAsync() > 0;
+    }
+
     public async Task<User?> GetByRefreshToken(string refreshToken)
     {
         return await _context.Users
