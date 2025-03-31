@@ -1,5 +1,6 @@
-using Application.DTOs.Subscriptions;
+using System.Security.Claims;
 using Application.Interfaces.PaymentMethods;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -17,12 +18,14 @@ public class PaymentController : ControllerBase
     }
     
     [HttpPost("create-checkout-session")]
-    public async Task<IActionResult> CreateCheckoutSession([FromBody] CreateCheckSessionDto dto)
+    [Authorize]
+    public async Task<IActionResult> CreateCheckoutSession()
     {
-        if(dto.UserId < 0)
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if(userId is null)
             return BadRequest("UserId is invalid");
         
-        string checkoutUrl = await _service.CreateCheckoutSessionAsync(dto.UserId, 10.00m);
+        string checkoutUrl = await _service.CreateCheckoutSessionAsync(int.Parse(userId));
         return Ok(new { url = checkoutUrl });
     }
     
