@@ -1,8 +1,8 @@
+using System.Security.Claims;
 using API.Filters;
 using Application.DTOs.Products;
 using Application.Interfaces.Products;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -38,9 +38,10 @@ public class ProductController : ControllerBase
     [Authorize(Roles = "Seller")]
     [ServiceFilter(typeof(SubscriptionRequirementFilter))]
     public async Task<IActionResult> Create([FromForm] ProductRequestDto dto, [FromForm] List<IFormFile> images)
-
-    {
-        var  product = await _service.CreateAsync(dto, images);
+    { 
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        
+        var  product = await _service.CreateAsync(int.Parse(userId),dto, images);
         return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
     }
 
