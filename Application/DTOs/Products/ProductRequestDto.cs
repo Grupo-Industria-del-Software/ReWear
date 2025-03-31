@@ -4,7 +4,6 @@ namespace Application.DTOs.Products;
 
 public class ProductRequestDto
 {
-    public int UserId { get; set; }
     public int CategoryId { get; set; }
     public int ConditionId { get; set; }
     public int SizeId { get; set; }

@@ -45,14 +45,14 @@ public class ProductService : IProductService
         return product is null ? null : _mapper.ToDto(product);
     }
 
-    public async Task<ProductResponseDto> CreateAsync(ProductRequestDto dto, List<IFormFile> images)
+    public async Task<ProductResponseDto> CreateAsync(int userId, ProductRequestDto dto, List<IFormFile> images)
     {
         if (dto == null)
             throw new ArgumentNullException(nameof(dto), "El producto no puede ser nulo.");
         
         var product = new Product
         {
-            UserId = dto.UserId,
+            UserId = userId,
             CategoryId = dto.CategoryId,
             ConditionId = dto.ConditionId,
             SizeId = dto.SizeId,
@@ -69,22 +69,18 @@ public class ProductService : IProductService
         
         await _repository.AddAsync(product);
     
-        // Procesar cada imagen recibida
         foreach (var imgFile in images)
         {
             if (imgFile != null && imgFile.Length > 0)
             {
-                // Guardar el archivo en una ruta temporal
                 var tempFilePath = Path.GetTempFileName();
                 using (var stream = new FileStream(tempFilePath, FileMode.Create))
                 {
                     await imgFile.CopyToAsync(stream);
                 }
 
-                // Subir la imagen a Cloudinary
                 var uploadResult = await _cloudinaryService.UploadImageAsync(tempFilePath);
 
-                // Agregar la imagen al producto
                 product.ProductImages.Add(new ProductImage
                 {
                     ProductId = product.Id,
@@ -92,12 +88,10 @@ public class ProductService : IProductService
                     PublicId = uploadResult.PublicId,
                 });
 
-                // Eliminar el archivo temporal
                 File.Delete(tempFilePath);
             }
         }
 
-        // Actualizar el producto con las imágenes subidas
         await _repository.UpdateAsync(product);
         return _mapper.ToDto(product);
     }
