@@ -23,7 +23,6 @@ using Application.Services.Categories;
 using Application.Services.Conditions;
 using Application.Services.Departments;
 using Application.Services.Municipalities;
-using Application.Services.PaymentMethods;
 using Application.Services.Products;
 using Application.Services.RefreshTokens;
 using Application.Services.Users;
@@ -48,7 +47,6 @@ namespace Infrastructure.Dependencies
             services.AddScoped(typeof(ICatalogService<,,>), typeof(CatalogService<,,>));
 
             services.AddScoped<ICatalogService<OrderStatus, CatalogRequestDTO, CatalogResponseDTO>, CatalogService<OrderStatus, CatalogRequestDTO, CatalogResponseDTO>>();
-            services.AddScoped<ICatalogService<PaymentStatus, CatalogRequestDTO, CatalogResponseDTO>, CatalogService<PaymentStatus, CatalogRequestDTO, CatalogResponseDTO>>();
 
             // Category
             services.AddScoped<ICategoryService, CategoryService>();
@@ -57,10 +55,6 @@ namespace Infrastructure.Dependencies
             // UserRoles
             services.AddScoped<IUserRolesService, UserRolesService>();
             services.AddScoped<IUserRolesRepository, UserRolesRepository>();
-
-            // PaymentMethods
-            services.AddScoped<IPaymentMethodService, PaymentMethodService>();
-            services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
 
             // Condition
             services.AddScoped<IConditionService, ConditionService>();
