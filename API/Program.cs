@@ -18,16 +18,15 @@ StripeConfiguration.ConfigureStripe(builder.Configuration);
 
 builder.Services.AddInfrastructure();
 
-// CORS
+// Configurar CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend", build =>
-    {
-        build.WithOrigins("http://localhost:3001") 
-               .AllowAnyMethod() 
-               .AllowAnyHeader() 
-               .AllowCredentials(); 
-    });
+    options.AddPolicy("AllowLocalhost",
+        builder => builder
+            .WithOrigins("http://localhost:3000", "http://localhost:3001", "http://localhost:3002")
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials());
 });
 
 builder.Services.AddControllers();
@@ -61,7 +60,7 @@ app.UseHttpsRedirection();
 
 // Usar CORS
 app.UseCors("AllowFrontend");
-
+app.UseCors("AllowLocalhost");
 app.UseAuthorization();
 
 app.MapControllers();

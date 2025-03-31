@@ -2,6 +2,7 @@
 using Application.Interfaces.Auth;
 using Application.Interfaces.Catalogs;
 using Application.Interfaces.Categories;
+using Application.Interfaces.Cloudinary;
 using Application.Interfaces.Conditions;
 using Application.Interfaces.Department;
 using Application.Interfaces.Mappers;
@@ -24,11 +25,13 @@ using Application.Services.OrderTypes;
 using Application.Services.PaymentMethods;
 using Application.Services.Products;
 using Application.Services.RefreshTokens;
+using Application.Services.Users;
 using Application.Services.Subscriptions;
 using Domain.Entities;
 using Infrastructure.Payments;
 using Infrastructure.Providers;
 using Infrastructure.Repositories;
+using Infrastructure.Services;
 using Infrastructure.Utils;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -95,11 +98,15 @@ namespace Infrastructure.Dependencies
             
             // Users
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
             
             // Tokens
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddScoped<IRefreshTokenService, RefreshTokenService>();
             
+            //Cloudinary
+            services.AddScoped<ICloudinaryService, CloudinaryService>();
+
             return services;
         } 
     }
