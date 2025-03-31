@@ -11,8 +11,6 @@ namespace Infrastructure.Persistence
         public AlqDbContext(DbContextOptions<AlqDbContext> options) : base(options)
         {
         }
-
-        public DbSet<OrderType> OrderTypes { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<OrderStatus> OrderStatus { get; set; }
         public DbSet<PaymentStatus> PaymentStatus { get; set; }
