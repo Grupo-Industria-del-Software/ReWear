@@ -8,4 +8,5 @@ public interface ISubscriptionRepository
     Task<Subscription?> GetByUserIdAsync(int userId);
     Task AddAsync(Subscription subscription);
     Task UpdateAsync(Subscription subscription);
+    Task<bool> HasActiveSubscriptionAsync(int userId);
 }

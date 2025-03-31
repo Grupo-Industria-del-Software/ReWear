@@ -1,3 +1,4 @@
+using API.Filters;
 using Application.DTOs.Products;
 using Application.Interfaces.Products;
 using Microsoft.AspNetCore.Authorization;
@@ -18,7 +19,6 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = "Customer")]
     public async Task<IActionResult> GetAll(
         [FromQuery]  ProductFilterDto filterDto
         )
@@ -35,7 +35,10 @@ public class ProductController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Seller")]
+    [ServiceFilter(typeof(SubscriptionRequirementFilter))]
     public async Task<IActionResult> Create([FromForm] ProductRequestDto dto, [FromForm] List<IFormFile> images)
+
     {
         var  product = await _service.CreateAsync(dto, images);
         return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);

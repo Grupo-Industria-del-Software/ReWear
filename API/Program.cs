@@ -1,4 +1,5 @@
 using API.Config;
+using API.Filters;
 using Infrastructure.Configurations;
 using Infrastructure.Dependencies;
 using Infrastructure.Persistence;
@@ -12,6 +13,7 @@ var dbConfig = new DbConfig();
 builder.Services.AddDbContext<AlqDbContext>(options => options.UseSqlServer(dbConfig.ConnectionString));
 
 builder.Services.AddJwtConfiguration(builder.Configuration);
+
 StripeConfiguration.ConfigureStripe(builder.Configuration);
 
 builder.Services.AddInfrastructure();
@@ -28,10 +30,15 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Filters
+builder.Services.AddScoped<SubscriptionRequirementFilter>();
+
+// Authorization
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));

@@ -31,4 +31,10 @@ public class SubscriptionRepository :  ISubscriptionRepository
         _context.Subscriptions.Update(subscription);
         return _context.SaveChangesAsync();
     }
+
+    public async Task<bool> HasActiveSubscriptionAsync(int userId)
+    {
+        return await _context.Subscriptions
+            .AnyAsync(s => s.UserId == userId && s.IsActive && s.EndDate >= DateTime.UtcNow);
+    }
 }
