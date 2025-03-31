@@ -11,16 +11,13 @@ namespace Infrastructure.Persistence
         public AlqDbContext(DbContextOptions<AlqDbContext> options) : base(options)
         {
         }
-        public DbSet<PaymentMethod> PaymentMethods { get; set; }
+        
         public DbSet<OrderStatus> OrderStatus { get; set; }
-        public DbSet<PaymentStatus> PaymentStatus { get; set; }
         public DbSet<ProductStatus> ProductStatus { get; set; }
         
         public DbSet<Size> Sizes { get; set; }
         
         public DbSet<Brand> Brands { get; set; }
-        
-        public DbSet<Color> Colors { get; set; }
         
         public DbSet<Category> Categories { get; set; }
         public DbSet<UserRoles> UserRoles { get; set; }
