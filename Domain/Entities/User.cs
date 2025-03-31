@@ -12,6 +12,7 @@ public class User : Entity
     public UserRoles? Role { get; set; }
     // Address
     public string PhoneNumber { get; set; }
+    
     public string? ProfilePicture { get; set; }
 
     public string? CloudinaryPublicId { get; set; }
