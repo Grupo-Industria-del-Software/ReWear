@@ -1,5 +1,6 @@
 using API.Config;
 using API.Filters;
+using API.Hubs;
 using Infrastructure.Configurations;
 using Infrastructure.Dependencies;
 using Infrastructure.Persistence;
@@ -17,6 +18,9 @@ builder.Services.AddJwtConfiguration(builder.Configuration);
 StripeConfiguration.ConfigureStripe(builder.Configuration);
 
 builder.Services.AddInfrastructure();
+
+// Agregar SignalR para comunicación en tiempo real
+builder.Services.AddSignalR();
 
 // Configurar CORS
 builder.Services.AddCors(options =>
@@ -65,4 +69,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+// Mapeo del hub de SignalR 
+app.MapHub<ChatHub>("/chatHub");
 app.Run();
