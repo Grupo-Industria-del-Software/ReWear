@@ -8,7 +8,6 @@ using Application.Interfaces.Department;
 using Application.Interfaces.Mappers;
 using Application.Interfaces.Municipality;
 using Application.Interfaces.Orders;
-using Application.Interfaces.OrderTypes;
 using Application.Interfaces.PaymentMethods;
 using Application.Interfaces.Products;
 using Application.Interfaces.RefreshTokens;
@@ -24,7 +23,6 @@ using Application.Services.Categories;
 using Application.Services.Conditions;
 using Application.Services.Departments;
 using Application.Services.Municipalities;
-using Application.Services.OrderTypes;
 using Application.Services.PaymentMethods;
 using Application.Services.Products;
 using Application.Services.RefreshTokens;
@@ -55,10 +53,6 @@ namespace Infrastructure.Dependencies
             // Category
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICategoryRepository, CategoryRepository>(); 
-
-            // OrderType
-            services.AddScoped<IOrderTypeService, OrderTypeService>();
-            services.AddScoped<IOrderTypeRepository, OrderTypeRepository>();
 
             // UserRoles
             services.AddScoped<IUserRolesService, UserRolesService>();
