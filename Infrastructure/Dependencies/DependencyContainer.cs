@@ -1,8 +1,8 @@
 ﻿using Application.DTOs.Catalogs;
-using Application.Interfaces;
 using Application.Interfaces.Auth;
 using Application.Interfaces.Catalogs;
 using Application.Interfaces.Categories;
+using Application.Interfaces.Cloudinary;
 using Application.Interfaces.Conditions;
 using Application.Interfaces.Department;
 using Application.Interfaces.Mappers;
@@ -19,18 +19,23 @@ using Application.Interfaces.Utils;
 using Application.Mappers;
 using Application.Services;
 using Application.Services.Auth;
-using Application.Services.CategoryServices;
-using Application.Services.DepartmentService;
-using Application.Services.MunicipalityServices;
 using Application.Services.Orders;
+using Application.Services.Categories;
+using Application.Services.Conditions;
+using Application.Services.Departments;
+using Application.Services.Municipalities;
 using Application.Services.OrderTypes;
 using Application.Services.PaymentMethods;
 using Application.Services.Products;
 using Application.Services.RefreshTokens;
+using Application.Services.Users;
+using Application.Services.Subscriptions;
+using Application.Services.UserRoles;
 using Domain.Entities;
 using Infrastructure.Payments;
 using Infrastructure.Providers;
 using Infrastructure.Repositories;
+using Infrastructure.Services;
 using Infrastructure.Utils;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -92,10 +97,13 @@ namespace Infrastructure.Dependencies
 
             // Payments
             services.AddScoped<IPaymentService, StripePaymentService>();
+            
             services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+            services.AddScoped<ISubscriptionService, SubscriptionService>();
             
             // Users
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
             
             // Tokens
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
@@ -104,6 +112,10 @@ namespace Infrastructure.Dependencies
             // Orders
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            
+            //Cloudinary
+            services.AddScoped<ICloudinaryService, CloudinaryService>();
+
             return services;
         } 
     }

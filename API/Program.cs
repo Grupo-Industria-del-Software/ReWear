@@ -1,4 +1,5 @@
 using API.Config;
+using API.Filters;
 using Infrastructure.Configurations;
 using Infrastructure.Dependencies;
 using Infrastructure.Persistence;
@@ -12,27 +13,32 @@ var dbConfig = new DbConfig();
 builder.Services.AddDbContext<AlqDbContext>(options => options.UseSqlServer(dbConfig.ConnectionString));
 
 builder.Services.AddJwtConfiguration(builder.Configuration);
+
 StripeConfiguration.ConfigureStripe(builder.Configuration);
 
 builder.Services.AddInfrastructure();
 
-// Configuración de CORS
+// Configurar CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend", builder =>
-    {
-        builder.WithOrigins("http://localhost:3001") // Dirección del frontend
-               .AllowAnyMethod() // Permite todos los métodos HTTP (GET, POST, PUT, DELETE, etc.)
-               .AllowAnyHeader() 
-               .AllowCredentials(); 
-    });
+    options.AddPolicy("AllowLocalhost",
+        builder => builder
+            .WithOrigins("http://localhost:3000", "http://localhost:3001", "http://localhost:3002")
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials());
 });
 
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Filters
+builder.Services.AddScoped<SubscriptionRequirementFilter>();
+
+// Authorization
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
@@ -54,7 +60,7 @@ app.UseHttpsRedirection();
 
 // Usar CORS
 app.UseCors("AllowFrontend");
-
+app.UseCors("AllowLocalhost");
 app.UseAuthorization();
 
 app.MapControllers();

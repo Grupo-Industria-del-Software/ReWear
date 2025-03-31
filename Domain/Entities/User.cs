@@ -13,6 +13,8 @@ public class User : Entity
     // Address
     public string PhoneNumber { get; set; }
     public string ProfilePicture { get; set; }
+    
+    public string CloudinaryPublicId { get; set; }
     public bool Active { get; set; }
     
     public Subscription? Subscription { get; set; }

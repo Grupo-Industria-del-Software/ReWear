@@ -2,7 +2,7 @@
 using Application.Interfaces.PaymentMethods;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers.PaymentMethods
+namespace API.Controllers
 {
     [ApiController]
     [Route("/api/PaymentMethod")]
