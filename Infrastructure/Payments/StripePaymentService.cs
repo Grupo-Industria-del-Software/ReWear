@@ -19,7 +19,7 @@ public class StripePaymentService : IPaymentService
         _configuration = configuration;
     }
     
-    public async Task<string> CreateCheckoutSessionAsync(int userId, decimal price)
+    public async Task<string> CreateCheckoutSessionAsync(int userId)
     {
         var options = new SessionCreateOptions
         {

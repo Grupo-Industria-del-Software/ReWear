@@ -31,25 +31,21 @@ public class AuthService : IAuthService
     {
         var newPass = _hasher.HashPassword(registerRequestDto.Password);
         
-        string profilePicUrl = null;
+        string profilePicUrl = null; // Falta subir una imagen default 
         string cloudinaryPublicId = null;
-
-        // Si se ha enviado una imagen de perfil, se procesa
+        
         if (profilePicture != null && profilePicture.Length > 0)
         {
-            // Guardar el archivo en una ruta temporal
             var tempFilePath = Path.GetTempFileName();
             using (var stream = new FileStream(tempFilePath, FileMode.Create))
             {
                 await profilePicture.CopyToAsync(stream);
             }
-
-            // Subir la imagen a Cloudinary
+            
             var uploadResult = await _cloudinaryService.UploadImageAsync(tempFilePath);
             profilePicUrl = uploadResult.Url;
             cloudinaryPublicId = uploadResult.PublicId;
-
-            // Eliminar el archivo temporal
+            
             File.Delete(tempFilePath);
         }
         
@@ -108,7 +104,7 @@ public class AuthService : IAuthService
     {
         var refreshToken = await _refreshTokenService.GetByRefreshTokenAsync(refreshTokenRequestDto.RefreshToken);
 
-        if (refreshToken is null || refreshToken.ExpiresOnUtc < DateTime.UtcNow || refreshToken.IsUsed)
+        if (refreshToken is null || refreshToken.ExpiresOnUtc < DateTime.UtcNow)
         {
             return null;
         }

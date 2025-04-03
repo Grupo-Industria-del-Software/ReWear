@@ -12,8 +12,9 @@ public class User : Entity
     public UserRoles? Role { get; set; }
     // Address
     public string PhoneNumber { get; set; }
-    public string ProfilePicture { get; set; }
     
+    public string? ProfilePicture { get; set; }
+
     public string? CloudinaryPublicId { get; set; }
     public bool Active { get; set; }
     
@@ -23,7 +24,7 @@ public class User : Entity
     
     private User() { }
     
-    public User(string firstName, string lastName, string email, string password, int roleId, string phoneNumber, string profilePicture, bool active)
+    public User(string firstName, string lastName, string email, string password, int roleId, string phoneNumber, string? profilePicture, bool active)
     {
         FirstName = firstName;
         LastName = lastName;
