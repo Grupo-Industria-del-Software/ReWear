@@ -19,12 +19,17 @@ namespace Application.Services
 
         public async Task<TCatalogResponseDTO> CreateAsync(TCatalogRequestDTO catalogRequestDTO)
         {
-            var catalog = new T { Label = catalogRequestDTO.Label };
+            var catalog = new T
+            {
+                Label = catalogRequestDTO.Label,
+                IsActive = true
+            };
             await _repository.AddAsync(catalog);
             return new TCatalogResponseDTO
             {
                 Id = catalog.Id,
                 Label = catalog.Label,
+                IsActive = catalog.IsActive
             };
         }
 
@@ -39,7 +44,8 @@ namespace Application.Services
             return catalogs.Select(x => new TCatalogResponseDTO
             {
                 Id = x.Id,
-                Label = x.Label
+                Label = x.Label,
+                IsActive = x.IsActive
             });
         }
 
@@ -52,6 +58,7 @@ namespace Application.Services
             {
                 Id = catalog.Id,
                 Label = catalog.Label,
+                IsActive = catalog.IsActive
             };
         }
 

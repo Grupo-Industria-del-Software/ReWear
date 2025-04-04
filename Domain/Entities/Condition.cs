@@ -2,8 +2,7 @@
 
 namespace Domain.Entities
 {
-    public class Condition : Entity
+    public class Condition : EntityCatalog
     {
-        public string Name { get; set; } = string.Empty;
     }
 }
