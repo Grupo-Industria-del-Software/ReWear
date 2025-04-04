@@ -1,7 +1,5 @@
 using Application.DTOs.Auth;
 using Application.DTOs.Catalogs;
-using Application.DTOs.CategoriesDTO;
-using Application.DTOs.ConditionsDTOs;
 
 namespace Application.DTOs.Products;
 
@@ -18,8 +16,8 @@ public class ProductResponseDto
     public List<ProductImageResponseDto>? ProductImages { get; set; }
     
     public UserResponseDTO?  User { get; set; } 
-    public CategoryResponseDTO?  Category { get; set; }
-    public ConditionResponseDTO?  Condition { get; set; }
+    public CatalogResponseDTO?  Category { get; set; }
+    public CatalogResponseDTO?  Condition { get; set; }
     public CatalogResponseDTO? Size { get; set; }
     public CatalogResponseDTO? Brand { get; set; }
     public CatalogResponseDTO? ProductStatus { get; set; }

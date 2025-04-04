@@ -1,7 +1,5 @@
 using Application.DTOs.Auth;
 using Application.DTOs.Catalogs;
-using Application.DTOs.CategoriesDTO;
-using Application.DTOs.ConditionsDTOs;
 using Application.DTOs.Products;
 using Application.Interfaces.Mappers;
 using Domain.AggregateRoots.Products;
@@ -36,17 +34,17 @@ public class ProductMapper : IProductMapper
                 }
                 : null,
             Category = product.Category != null
-                ? new CategoryResponseDTO
+                ? new CatalogResponseDTO()
                 {
                     Id = product.Category.Id,
-                    Name = product.Category.Name
+                    Label = product.Category.Label
                 }
                 : null,
             Condition = product.Condition != null
-                ? new ConditionResponseDTO
+                ? new CatalogResponseDTO()
                 {
                     Id = product.Condition.Id,
-                    Name = product.Condition.Name,
+                    Label = product.Condition.Label,
                 }
                 : null,
             Size = product.Size != null

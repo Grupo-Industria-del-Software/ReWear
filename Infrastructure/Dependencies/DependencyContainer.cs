@@ -1,10 +1,8 @@
 ﻿using Application.DTOs.Catalogs;
 using Application.Interfaces.Auth;
 using Application.Interfaces.Catalogs;
-using Application.Interfaces.Categories;
 using Application.Interfaces.Chat;
 using Application.Interfaces.Cloudinary;
-using Application.Interfaces.Conditions;
 using Application.Interfaces.Department;
 using Application.Interfaces.Mappers;
 using Application.Interfaces.Message;
@@ -21,9 +19,7 @@ using Application.Mappers;
 using Application.Services;
 using Application.Services.Auth;
 using Application.Services.Orders;
-using Application.Services.Categories;
 using Application.Services.Chat;
-using Application.Services.Conditions;
 using Application.Services.Departments;
 using Application.Services.Municipalities;
 using Application.Services.Products;
@@ -51,17 +47,9 @@ namespace Infrastructure.Dependencies
 
             services.AddScoped<ICatalogService<OrderStatus, CatalogRequestDTO, CatalogResponseDTO>, CatalogService<OrderStatus, CatalogRequestDTO, CatalogResponseDTO>>();
 
-            // Category
-            services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<ICategoryRepository, CategoryRepository>(); 
-
             // UserRoles
             services.AddScoped<IUserRolesService, UserRolesService>();
             services.AddScoped<IUserRolesRepository, UserRolesRepository>();
-
-            // Condition
-            services.AddScoped<IConditionService, ConditionService>();
-            services.AddScoped<IConditionRepository, ConditionRepository>();
             
             //Departmnet
             services.AddScoped<IDepartmentService, DepartmentService>();

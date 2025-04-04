@@ -2,7 +2,7 @@ using Domain.Common;
 
 namespace Domain.Entities;
 
-public class Category : Entity
+public class Category : EntityCatalog
 {
-    public string Name { get; set; } = string.Empty;
+    
 }
