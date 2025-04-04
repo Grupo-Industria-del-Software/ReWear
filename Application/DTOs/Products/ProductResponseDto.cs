@@ -1,5 +1,6 @@
 using Application.DTOs.Auth;
 using Application.DTOs.Catalogs;
+using Application.DTOs.Users;
 
 namespace Application.DTOs.Products;
 

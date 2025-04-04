@@ -1,4 +1,4 @@
-namespace Application.DTOs.MessageDto;
+namespace Application.DTOs.Messages;
 
 public class MessageRequestDto
 {

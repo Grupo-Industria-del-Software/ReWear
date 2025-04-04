@@ -1,4 +1,4 @@
-using Application.DTOs.MunicipalityDTO;
+using Application.DTOs.Municipalities;
 using Application.Interfaces.Municipality;
 using Domain.Entities;
 

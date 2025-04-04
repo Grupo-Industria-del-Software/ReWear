@@ -1,4 +1,4 @@
-using Application.DTOs.MunicipalityDTO;
+using Application.DTOs.Municipalities;
 
 namespace Application.Interfaces.Municipality;
 

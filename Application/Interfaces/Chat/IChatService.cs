@@ -1,5 +1,5 @@
-using Application.DTOs.ChatDto;
-using Application.DTOs.MessageDto;
+using Application.DTOs.Chats;
+using Application.DTOs.Messages;
 
 namespace Application.Interfaces.Chat;
 

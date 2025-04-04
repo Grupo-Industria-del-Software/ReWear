@@ -1,4 +1,4 @@
-using Application.DTOs.DepartmentDTO;
+using Application.DTOs.Departments;
 
 namespace Application.Interfaces.Department;
 

@@ -1,4 +1,4 @@
-namespace Application.DTOs.DepartmentDTO;
+namespace Application.DTOs.Departments;
 
 public class DepartmentResponseDTO
 {

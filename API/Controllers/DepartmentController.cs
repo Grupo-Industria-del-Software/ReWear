@@ -1,4 +1,4 @@
-using Application.DTOs.DepartmentDTO;
+using Application.DTOs.Departments;
 using Application.Interfaces.Department;
 using Microsoft.AspNetCore.Mvc;
 

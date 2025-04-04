@@ -1,6 +1,6 @@
-namespace Application.DTOs.ChatDto;
+namespace Application.DTOs.Messages;
 
-public class ChatRequestDto
+public class MessageResponseDto
 {
     public int Id { get; set; }
     public int ChatId { get; set; }

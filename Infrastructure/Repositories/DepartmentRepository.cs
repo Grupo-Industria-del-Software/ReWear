@@ -1,4 +1,3 @@
-using Application.DTOs.DepartmentDTO;
 using Application.Interfaces.Department;
 using Domain.Entities;
 using Infrastructure.Persistence;

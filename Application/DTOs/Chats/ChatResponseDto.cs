@@ -1,6 +1,6 @@
-using Application.DTOs.MessageDto;
+using Application.DTOs.Messages;
 
-namespace Application.DTOs.ChatDto;
+namespace Application.DTOs.Chats;
 
 public class ChatResponseDto
 {
