@@ -1,5 +1,4 @@
-﻿using Application.DTOs.UserRolesDTO;
-using Application.DTOs.UserRolesDTO.UserRolesDTO;
+﻿using Application.DTOs.UserRoles;
 
 namespace Application.Interfaces.userRoles
 {

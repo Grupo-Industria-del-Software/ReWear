@@ -1,4 +1,4 @@
-namespace Application.DTOs.MunicipalityDTO;
+namespace Application.DTOs.Municipalities;
 
 public class MunicipalityResponseDTO
 {

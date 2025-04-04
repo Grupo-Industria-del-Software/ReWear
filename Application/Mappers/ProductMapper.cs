@@ -1,6 +1,7 @@
 using Application.DTOs.Auth;
 using Application.DTOs.Catalogs;
 using Application.DTOs.Products;
+using Application.DTOs.Users;
 using Application.Interfaces.Mappers;
 using Domain.AggregateRoots.Products;
 

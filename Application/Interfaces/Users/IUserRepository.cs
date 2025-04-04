@@ -4,8 +4,6 @@ namespace Application.Interfaces.Users;
 
 public interface IUserRepository
 {
-    Task<List<User>> GetAllUsers();
-    Task<bool> ChageState(int userId);
     Task AddAsync(User user);
     Task<User?> GetByEmail(string email);
     Task<User?> GetById(int id);

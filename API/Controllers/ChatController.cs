@@ -1,4 +1,4 @@
-using Application.DTOs.MessageDto;
+using Application.DTOs.Messages;
 using Application.Interfaces.Chat;
 using Microsoft.AspNetCore.Mvc;
 

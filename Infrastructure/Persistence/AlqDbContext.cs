@@ -20,6 +20,8 @@ namespace Infrastructure.Persistence
         public DbSet<Brand> Brands { get; set; }
         
         public DbSet<Category> Categories { get; set; }
+        
+        public DbSet<CategorySize>  CategorySizes { get; set; }
         public DbSet<UserRoles> UserRoles { get; set; }
         public DbSet<Condition> Conditions { get; set; }
         public DbSet<Department> Departments { get; set; }
@@ -37,21 +39,22 @@ namespace Infrastructure.Persistence
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Message> Messages { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Municipality>()
-                .HasOne(m => m.Department)  
+                .HasOne(m => m.Department)
                 .WithMany(d => d.municipalities)
                 .HasForeignKey(m => m.DepartmentId)
-                .OnDelete(DeleteBehavior.Cascade); 
-            
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Role)
                 .WithMany(r => r.Users)
                 .HasForeignKey(u => u.RoleId)
                 .OnDelete(DeleteBehavior.Cascade);
-            
+
             // Aggregate
             // product -> user
             modelBuilder.Entity<Product>()
@@ -59,45 +62,45 @@ namespace Infrastructure.Persistence
                 .WithMany()
                 .HasForeignKey(p => p.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
-            
+
             // product -> category
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Category)
                 .WithMany()
                 .HasForeignKey(p => p.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
-            
+
             modelBuilder.Entity<ProductImage>()
                 .HasOne(i => i.Product)
                 .WithMany(p => p.ProductImages)
                 .HasForeignKey(i => i.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
-            
+
             modelBuilder.Entity<Product>()
                 .Property(p => p.Price)
                 .HasPrecision(18, 2);
-            
+
             modelBuilder.Entity<Product>()
                 .Property(p => p.PricePerDay)
                 .HasPrecision(18, 2);
-            
+
             modelBuilder.Entity<Subscription>()
                 .Property(s => s.Price)
                 .HasPrecision(18, 2);
-            
+
             modelBuilder.Entity<Subscription>()
                 .HasOne(s => s.User)
                 .WithOne(u => u.Subscription)
                 .HasForeignKey<Subscription>(s => s.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
-            
+
             //RefreshToken
             modelBuilder.Entity<RefreshToken>()
                 .HasOne(rt => rt.User)
                 .WithMany(u => u.RefreshTokens)
                 .HasForeignKey(rt => rt.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
-            
+
             modelBuilder.Entity<RefreshToken>()
                 .HasIndex(rt => rt.Token)
                 .IsUnique();
@@ -127,12 +130,26 @@ namespace Infrastructure.Persistence
                 .WithMany()
                 .HasForeignKey(o => o.OrderStatusId)
                 .OnDelete(DeleteBehavior.NoAction);
-            
+
             //Chat
             modelBuilder.Entity<Chat>()
                 .HasMany(c => c.Messages)
                 .WithOne(m => m.Chat)
                 .HasForeignKey(m => m.ChatId);
+
+            //Category Sizes
+            modelBuilder.Entity<CategorySize>()
+                .HasKey(cz => new{cz.CategoryId, cz.SizeId});
+
+            modelBuilder.Entity<CategorySize>()
+                .HasOne(cz => cz.Category)
+                .WithMany(c => c.CategorySizes)
+                .HasForeignKey(cz => cz.CategoryId);
+            
+            modelBuilder.Entity<CategorySize>()
+                .HasOne(cz => cz.Size)
+                .WithMany(z => z.CategorySizes)
+                .HasForeignKey(cz => cz.SizeId);
         }
     }
 }
