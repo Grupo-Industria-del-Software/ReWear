@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs.Catalogs
 {
-    public class CatalogResponseDTO
+    public class CatalogResponseDto
     {
         public int Id { get; set; }
         public string Label { get; set; } = string.Empty;

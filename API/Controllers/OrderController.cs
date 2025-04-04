@@ -16,7 +16,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateOrder([FromBody] OrderRequestDTO request)
+        public async Task<IActionResult> CreateOrder([FromBody] OrderRequestDto request)
         {
             var hasInvalidItems = request.OrderItems.Any(item =>
                 (item.RentalStart.HasValue && item.RentalEnd < item.RentalStart) ||
@@ -72,7 +72,7 @@ namespace API.Controllers
         }
 
         [HttpPost("{orderId}/items")]
-        public async Task<IActionResult> AddOrderItem(int orderId, [FromBody] OrderItemRequestDTO item)
+        public async Task<IActionResult> AddOrderItem(int orderId, [FromBody] OrderItemRequestDto item)
         {
             try
             {
@@ -96,7 +96,7 @@ namespace API.Controllers
         public async Task<IActionResult> UpdateOrderItem(
             int orderId,
             int itemId,
-            [FromBody] OrderItemRequestDTO request)
+            [FromBody] OrderItemRequestDto request)
         {
             var success = await _orderService.UpdateOrderItemAsync(orderId, itemId, request);
             return success ? NoContent() : NotFound();

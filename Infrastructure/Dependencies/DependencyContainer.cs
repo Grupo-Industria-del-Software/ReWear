@@ -45,7 +45,7 @@ namespace Infrastructure.Dependencies
             services.AddScoped(typeof(ICatalogRepository<>), typeof(CatalogRepository<>));
             services.AddScoped(typeof(ICatalogService<,,>), typeof(CatalogService<,,>));
 
-            services.AddScoped<ICatalogService<OrderStatus, CatalogRequestDTO, CatalogResponseDTO>, CatalogService<OrderStatus, CatalogRequestDTO, CatalogResponseDTO>>();
+            services.AddScoped<ICatalogService<OrderStatus, CatalogRequestDto, CatalogResponseDto>, CatalogService<OrderStatus, CatalogRequestDto, CatalogResponseDto>>();
 
             // UserRoles
             services.AddScoped<IUserRolesService, UserRolesService>();

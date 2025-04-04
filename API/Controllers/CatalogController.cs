@@ -9,8 +9,8 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class CatalogController<T, TCatalogRequestDTO, TCatalogResponseDTO> : ControllerBase
         where T : EntityCatalog
-        where TCatalogRequestDTO : CatalogRequestDTO
-        where TCatalogResponseDTO : CatalogResponseDTO
+        where TCatalogRequestDTO : CatalogRequestDto
+        where TCatalogResponseDTO : CatalogResponseDto
     {
         private readonly ICatalogService<T, TCatalogRequestDTO, TCatalogResponseDTO> _service;
 

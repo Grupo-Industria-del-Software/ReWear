@@ -6,8 +6,8 @@ namespace Application.Services
 {
     public class CatalogService<T, TCatalogRequestDTO, TCatalogResponseDTO> : ICatalogService<T, TCatalogRequestDTO, TCatalogResponseDTO>
         where T : EntityCatalog, new()
-        where TCatalogRequestDTO : CatalogRequestDTO
-        where TCatalogResponseDTO : CatalogResponseDTO, new()
+        where TCatalogRequestDTO : CatalogRequestDto
+        where TCatalogResponseDTO : CatalogResponseDto, new()
     {
         private readonly ICatalogRepository<T> _repository;
 

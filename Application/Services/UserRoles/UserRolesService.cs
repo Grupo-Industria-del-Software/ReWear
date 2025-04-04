@@ -12,26 +12,26 @@ namespace Application.Services.UserRoles
             _userRolesRepository = userRolesRepository;
         }
 
-        public async Task<IEnumerable<UserRolesResponseDTO>> GetAllAsync()
+        public async Task<IEnumerable<UserRolesResponseDto>> GetAllAsync()
         {
             var userRoles = await _userRolesRepository.GetAllAsync();
-            return userRoles.Select(ur => new UserRolesResponseDTO { Id = ur.Id, Rol = ur.Rol });
+            return userRoles.Select(ur => new UserRolesResponseDto { Id = ur.Id, Rol = ur.Rol });
         }
 
-        public async Task<UserRolesResponseDTO?> GetByIdAsync(int id)
+        public async Task<UserRolesResponseDto?> GetByIdAsync(int id)
         {
             var userRole = await _userRolesRepository.GetByIdAsync(id);
-            return userRole is null ? null : new UserRolesResponseDTO { Id = userRole.Id, Rol = userRole.Rol };
+            return userRole is null ? null : new UserRolesResponseDto { Id = userRole.Id, Rol = userRole.Rol };
         }
 
-        public async Task<UserRolesResponseDTO> CreateAsync(UserRolesRequestDTO dto)
+        public async Task<UserRolesResponseDto> CreateAsync(UserRolesRequestDto dto)
         {
             var userRole = new Domain.Entities.UserRoles(dto.Rol);
             await _userRolesRepository.AddAsync(userRole);
-            return new UserRolesResponseDTO { Id = userRole.Id, Rol = userRole.Rol };
+            return new UserRolesResponseDto { Id = userRole.Id, Rol = userRole.Rol };
         }
 
-        public async Task<bool> UpdateAsync(int id, UserRolesRequestDTO dto)
+        public async Task<bool> UpdateAsync(int id, UserRolesRequestDto dto)
         {
             var userRole = await _userRolesRepository.GetByIdAsync(id);
 

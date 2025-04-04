@@ -7,9 +7,9 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("api/condition")] 
-    public class ConditionController : CatalogController<Condition, CatalogRequestDTO, CatalogResponseDTO>
+    public class ConditionController : CatalogController<Condition, CatalogRequestDto, CatalogResponseDto>
     {
-        public ConditionController(ICatalogService<Condition, CatalogRequestDTO, CatalogResponseDTO> service)
+        public ConditionController(ICatalogService<Condition, CatalogRequestDto, CatalogResponseDto> service)
             : base(service)
         {}
     }

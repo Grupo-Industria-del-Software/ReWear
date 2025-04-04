@@ -1,6 +1,6 @@
 namespace Application.DTOs.Municipalities;
 
-public class MunicipalityResponseDTO
+public class MunicipalityResponseDto
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;

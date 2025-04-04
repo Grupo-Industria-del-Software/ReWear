@@ -12,9 +12,9 @@ namespace Application.Mappers
         {
             _productMapper = productMapper;
         }
-        public OrderResponseDTO MapToOrderResponseDTO(Order order)
+        public OrderResponseDto MapToOrderResponseDTO(Order order)
         {
-            return new OrderResponseDTO
+            return new OrderResponseDto
             {
                 Id = order.Id,
                 ProviderId = order.ProviderId,
@@ -29,9 +29,9 @@ namespace Application.Mappers
             };
         }
 
-        public OrderItemResponseDTO MapToOrderItemResponseDTO(OrderItem item)
+        public OrderItemResponseDto MapToOrderItemResponseDTO(OrderItem item)
         {
-            return new OrderItemResponseDTO
+            return new OrderItemResponseDto
             {
                 Id = item.Id,
                 ProductId = item.ProductId,

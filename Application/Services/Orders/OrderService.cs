@@ -25,7 +25,7 @@ namespace Application.Services.Orders
             _orderMapper = orderMapper;
         }
 
-        public async Task<OrderResponseDTO> CreateOrderAsync(OrderRequestDTO request)
+        public async Task<OrderResponseDto> CreateOrderAsync(OrderRequestDto request)
         {
             if (request.OrderItems == null || !request.OrderItems.Any())
                 throw new ArgumentException("La orden debe contener al menos un item.");
@@ -71,7 +71,7 @@ namespace Application.Services.Orders
             return _orderMapper.MapToOrderResponseDTO(order);
         }
 
-        private void ValidateRentalDates(OrderItemRequestDTO item)
+        private void ValidateRentalDates(OrderItemRequestDto item)
         {
             bool hasStart = item.RentalStart.HasValue;
             bool hasEnd = item.RentalEnd.HasValue;
@@ -80,7 +80,7 @@ namespace Application.Services.Orders
                 throw new ArgumentException("Las fechas de alquiler deben ser ambas nulas o ambas válidas");
         }
 
-        private decimal CalculatePrice(Product product, OrderItemRequestDTO itemRequest)
+        private decimal CalculatePrice(Product product, OrderItemRequestDto itemRequest)
         {
             if (itemRequest.RentalStart.HasValue && itemRequest.RentalEnd.HasValue)
             {
@@ -103,7 +103,7 @@ namespace Application.Services.Orders
             }
         }
 
-        public async Task<OrderResponseDTO> GetOrderByIdAsync(int id)
+        public async Task<OrderResponseDto> GetOrderByIdAsync(int id)
         {
             var order = await _orderRepository.GetByIdAsync(id);
             if (order == null) throw new KeyNotFoundException($"Orden {id} no encontrada");
@@ -127,7 +127,7 @@ namespace Application.Services.Orders
             return true;
         }
 
-        public async Task<OrderItemResponseDTO> AddItemToOrderAsync(int orderId, OrderItemRequestDTO item)
+        public async Task<OrderItemResponseDto> AddItemToOrderAsync(int orderId, OrderItemRequestDto item)
         {
             var order = await _orderRepository.GetByIdAsync(orderId);
             if (order == null) throw new KeyNotFoundException($"Order {orderId} not found");
@@ -168,7 +168,7 @@ namespace Application.Services.Orders
             return true;
         }
 
-        public async Task<bool> UpdateOrderItemAsync(int orderId, int itemId, OrderItemRequestDTO request)
+        public async Task<bool> UpdateOrderItemAsync(int orderId, int itemId, OrderItemRequestDto request)
         {
             var order = await _orderRepository.GetByIdAsync(orderId);
             if (order == null) return false;

@@ -5,7 +5,7 @@ namespace Application.Interfaces.Mappers
 {
     public interface IOrderMapper
     {
-        OrderResponseDTO MapToOrderResponseDTO(Order order);
-        OrderItemResponseDTO MapToOrderItemResponseDTO(OrderItem item);
+        OrderResponseDto MapToOrderResponseDTO(Order order);
+        OrderItemResponseDto MapToOrderItemResponseDTO(OrderItem item);
     }
 }
