@@ -16,11 +16,11 @@ public class ProductResponseDto
     
     public List<ProductImageResponseDto>? ProductImages { get; set; }
     
-    public UserResponseDTO?  User { get; set; } 
-    public CatalogResponseDTO?  Category { get; set; }
-    public CatalogResponseDTO?  Condition { get; set; }
-    public CatalogResponseDTO? Size { get; set; }
-    public CatalogResponseDTO? Brand { get; set; }
-    public CatalogResponseDTO? ProductStatus { get; set; }
+    public UserResponseDto?  User { get; set; } 
+    public CatalogResponseDto?  Category { get; set; }
+    public CatalogResponseDto?  Condition { get; set; }
+    public CatalogResponseDto? Size { get; set; }
+    public CatalogResponseDto? Brand { get; set; }
+    public CatalogResponseDto? ProductStatus { get; set; }
 
 }

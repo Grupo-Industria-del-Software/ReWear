@@ -5,8 +5,8 @@ namespace Application.Interfaces.Catalogs
 {
     public interface ICatalogService<T, TStatusRequestDTO, TStatusResponseDTO>
         where T : EntityCatalog
-        where TStatusRequestDTO : CatalogRequestDTO
-        where TStatusResponseDTO : CatalogResponseDTO
+        where TStatusRequestDTO : CatalogRequestDto
+        where TStatusResponseDTO : CatalogResponseDto
     {
         Task<IEnumerable<TStatusResponseDTO>> GetAllAsync();
         Task<TStatusResponseDTO?> GetByIdAsync(int id);

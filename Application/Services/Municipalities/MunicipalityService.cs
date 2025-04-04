@@ -13,10 +13,10 @@ public class MunicipalityService:IMunicipalityService
             _repository = repository;
         }
 
-        public async Task<IEnumerable<MunicipalityResponseDTO>> GetAllAsync()
+        public async Task<IEnumerable<MunicipalityResponseDto>> GetAllAsync()
         {
             var municipalities = await _repository.GetAllAsync();
-            return municipalities.Select(m => new MunicipalityResponseDTO
+            return municipalities.Select(m => new MunicipalityResponseDto
             {
                 Id = m.Id,
                 Name = m.Name,
@@ -24,10 +24,10 @@ public class MunicipalityService:IMunicipalityService
             });
         }
 
-        public async Task<MunicipalityResponseDTO?> GetByIdAsync(int id)
+        public async Task<MunicipalityResponseDto?> GetByIdAsync(int id)
         {
             var municipality = await _repository.GetByIdAsync(id);
-            return municipality is null ? null : new MunicipalityResponseDTO
+            return municipality is null ? null : new MunicipalityResponseDto
             {
                 Id = municipality.Id,
                 Name = municipality.Name,
@@ -35,7 +35,7 @@ public class MunicipalityService:IMunicipalityService
             };
         }
 
-        public async Task<MunicipalityResponseDTO> CreateAsync(MunicipalityRequetsDTO dto)
+        public async Task<MunicipalityResponseDto> CreateAsync(MunicipalityRequetsDto dto)
         {
             var municipality = new Municipality()
             {
@@ -43,7 +43,7 @@ public class MunicipalityService:IMunicipalityService
                 DepartmentId = dto.DepartmentId
             };
             await _repository.AddAsync(municipality);
-            return new MunicipalityResponseDTO
+            return new MunicipalityResponseDto
             {
                 Id = municipality.Id,
                 Name = municipality.Name,
@@ -51,7 +51,7 @@ public class MunicipalityService:IMunicipalityService
             };
         }
 
-        public async Task<bool> UpdateAsync(int id, MunicipalityRequetsDTO dto)
+        public async Task<bool> UpdateAsync(int id, MunicipalityRequetsDto dto)
         {
             var municipality = await _repository.GetByIdAsync(id);
             if (municipality is null) return false;

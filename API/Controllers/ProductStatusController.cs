@@ -4,9 +4,9 @@ using Domain.Entities;
 
 namespace API.Controllers;
 
-public class ProductStatusController : CatalogController<ProductStatus, CatalogRequestDTO, CatalogResponseDTO>
+public class ProductStatusController : CatalogController<ProductStatus, CatalogRequestDto, CatalogResponseDto>
 {
-    public ProductStatusController(ICatalogService<ProductStatus, CatalogRequestDTO, CatalogResponseDTO> service) :
+    public ProductStatusController(ICatalogService<ProductStatus, CatalogRequestDto, CatalogResponseDto> service) :
         base(service)
     {
     }

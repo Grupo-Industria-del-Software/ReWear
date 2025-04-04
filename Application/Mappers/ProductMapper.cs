@@ -27,7 +27,7 @@ public class ProductMapper : IProductMapper
                 ImageUrl = i.ImageUrl
             }).ToList(),
             User = product.User != null
-                ? new UserResponseDTO
+                ? new UserResponseDto
                 {
                     Id = product.User.Id,
                     FirstName = product.User.FirstName,
@@ -35,35 +35,35 @@ public class ProductMapper : IProductMapper
                 }
                 : null,
             Category = product.Category != null
-                ? new CatalogResponseDTO()
+                ? new CatalogResponseDto()
                 {
                     Id = product.Category.Id,
                     Label = product.Category.Label
                 }
                 : null,
             Condition = product.Condition != null
-                ? new CatalogResponseDTO()
+                ? new CatalogResponseDto()
                 {
                     Id = product.Condition.Id,
                     Label = product.Condition.Label,
                 }
                 : null,
             Size = product.Size != null
-                ? new CatalogResponseDTO
+                ? new CatalogResponseDto
                 {
                     Id = product.Size.Id,
                     Label = product.Size.Label
                 }
                 : null,
             Brand = product.Brand != null
-                ? new CatalogResponseDTO
+                ? new CatalogResponseDto
                 {
                     Id = product.Brand.Id,
                     Label = product.Brand.Label
                 }
                 : null,
             ProductStatus = product.ProductStatus != null
-                ? new CatalogResponseDTO
+                ? new CatalogResponseDto
                 {
                     Id = product.ProductStatus.Id,
                     Label = product.ProductStatus.Label,

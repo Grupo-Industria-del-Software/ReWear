@@ -6,12 +6,12 @@ namespace Application.Interfaces.Orders
 {
     public interface IOrderService
     {
-        Task<OrderResponseDTO> CreateOrderAsync(OrderRequestDTO request);
+        Task<OrderResponseDto> CreateOrderAsync(OrderRequestDto request);
         Task<decimal> CalculateOrderTotalAsync(int orderId);
-        Task<OrderResponseDTO> GetOrderByIdAsync(int id);
+        Task<OrderResponseDto> GetOrderByIdAsync(int id);
         Task<bool> UpdateOrderStatusAsync(int orderId, int statusId);
-        Task<OrderItemResponseDTO> AddItemToOrderAsync(int orderId, OrderItemRequestDTO item);
+        Task<OrderItemResponseDto> AddItemToOrderAsync(int orderId, OrderItemRequestDto item);
         Task<bool> RemoveItemFromOrderAsync(int orderId, int itemId);
-        Task<bool> UpdateOrderItemAsync(int orderId, int itemId, OrderItemRequestDTO request);
+        Task<bool> UpdateOrderItemAsync(int orderId, int itemId, OrderItemRequestDto request);
     }
 }

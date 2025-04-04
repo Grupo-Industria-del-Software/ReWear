@@ -7,5 +7,5 @@ namespace Application.Interfaces.Users;
 public interface IUserService
 {
     Task<bool> UpdateUser(int id, UserRequestDto dto);
-    Task<UserResponseDTO?> GetByIdAsync(int id);
+    Task<UserResponseDto?> GetByIdAsync(int id);
 }

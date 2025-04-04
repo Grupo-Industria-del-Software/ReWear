@@ -5,13 +5,13 @@ namespace Application.Interfaces.userRoles
     public interface IUserRolesService
     {
 
-        Task<IEnumerable<UserRolesResponseDTO>> GetAllAsync();
+        Task<IEnumerable<UserRolesResponseDto>> GetAllAsync();
 
-        Task<UserRolesResponseDTO?> GetByIdAsync(int id);
+        Task<UserRolesResponseDto?> GetByIdAsync(int id);
 
-        Task<UserRolesResponseDTO> CreateAsync(UserRolesRequestDTO dto);
+        Task<UserRolesResponseDto> CreateAsync(UserRolesRequestDto dto);
 
-        Task<bool> UpdateAsync(int id, UserRolesRequestDTO dto);
+        Task<bool> UpdateAsync(int id, UserRolesRequestDto dto);
 
         Task<bool> DeleteAsync(int id);
     }

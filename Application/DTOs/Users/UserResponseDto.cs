@@ -1,6 +1,6 @@
 ﻿namespace Application.DTOs.Users
 {
-    public class UserResponseDTO
+    public class UserResponseDto
     {
         public int Id { get; set; }
         public string FirstName { get; set; }  = string.Empty;

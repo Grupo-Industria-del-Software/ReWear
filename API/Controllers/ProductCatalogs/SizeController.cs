@@ -4,9 +4,9 @@ using Domain.Entities;
 
 namespace API.Controllers.ProductCatalogs;
 
-public class SizeController : CatalogController<Size, CatalogRequestDTO, CatalogResponseDTO>
+public class SizeController : CatalogController<Size, CatalogRequestDto, CatalogResponseDto>
 {
-    public SizeController(ICatalogService<Size, CatalogRequestDTO, CatalogResponseDTO> service) :
+    public SizeController(ICatalogService<Size, CatalogRequestDto, CatalogResponseDto> service) :
         base(service)
     {
     }

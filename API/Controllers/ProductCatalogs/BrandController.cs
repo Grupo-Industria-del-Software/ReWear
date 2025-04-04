@@ -4,9 +4,9 @@ using Domain.Entities;
 
 namespace API.Controllers.ProductCatalogs;
 
-public class BrandController : CatalogController<Brand, CatalogRequestDTO, CatalogResponseDTO>
+public class BrandController : CatalogController<Brand, CatalogRequestDto, CatalogResponseDto>
 {
-    public BrandController(ICatalogService<Brand, CatalogRequestDTO, CatalogResponseDTO> service)
+    public BrandController(ICatalogService<Brand, CatalogRequestDto, CatalogResponseDto> service)
         : base(service)
     {}
 }

@@ -31,14 +31,14 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] UserRolesRequestDTO dto)
+        public async Task<IActionResult> Create([FromBody] UserRolesRequestDto dto)
         {
             var role = await _userRolesService.CreateAsync(dto);
             return CreatedAtAction(nameof(GetById), new { id = role.Id }, role);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] UserRolesRequestDTO dto)
+        public async Task<IActionResult> Update(int id, [FromBody] UserRolesRequestDto dto)
         {
             var updated = await _userRolesService.UpdateAsync(id, dto);
             return updated ? NoContent() : NotFound();

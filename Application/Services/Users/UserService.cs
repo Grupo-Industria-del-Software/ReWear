@@ -30,12 +30,12 @@ public class UserService : IUserService
         return await _repository.UpdateAsync(user);
     }
 
-    public async Task<UserResponseDTO?> GetByIdAsync(int id)
+    public async Task<UserResponseDto?> GetByIdAsync(int id)
         {
             var user = await _repository.GetByIdAsync(id);
             return user is null
                 ? null
-                : new UserResponseDTO()
+                : new UserResponseDto()
                 {
                     Id = user.Id,
                     FirstName = user.FirstName,

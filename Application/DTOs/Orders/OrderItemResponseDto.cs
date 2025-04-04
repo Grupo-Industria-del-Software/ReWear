@@ -2,7 +2,7 @@
 
 namespace Application.DTOs.Orders
 {
-    public class OrderItemResponseDTO
+    public class OrderItemResponseDto
     {
         public int Id { get; set; }
         public int ProductId { get; set; }

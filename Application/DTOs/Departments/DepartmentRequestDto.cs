@@ -1,6 +1,6 @@
 namespace Application.DTOs.Departments;
 
-public class DepartmentRequestDTO
+public class DepartmentRequestDto
 {
     public string DepartmentName { get; set; } = string.Empty;
 }

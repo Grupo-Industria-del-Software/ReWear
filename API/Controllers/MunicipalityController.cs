@@ -30,14 +30,14 @@ public class MunicipalityController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(MunicipalityRequetsDTO dto)
+    public async Task<IActionResult> Create(MunicipalityRequetsDto dto)
     {
         var created = await _service.CreateAsync(dto);
         return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, MunicipalityRequetsDTO dto)
+    public async Task<IActionResult> Update(int id, MunicipalityRequetsDto dto)
     {
         var updated = await _service.UpdateAsync(id, dto);
         return updated ? NoContent() : NotFound();

@@ -7,9 +7,9 @@ namespace API.Controllers;
 
 [Controller]
 [Route("api/Category")]
-public class CategoryController : CatalogController<Category, CatalogRequestDTO, CatalogResponseDTO>
+public class CategoryController : CatalogController<Category, CatalogRequestDto, CatalogResponseDto>
 {
-    public CategoryController(ICatalogService<Category, CatalogRequestDTO, CatalogResponseDTO> service)
+    public CategoryController(ICatalogService<Category, CatalogRequestDto, CatalogResponseDto> service)
         : base(service)
     {}
 }

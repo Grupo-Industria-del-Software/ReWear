@@ -12,37 +12,37 @@ public class DepartmentService : IDepartmentService
         _repository = repository;
     }
 
-    public async Task<IEnumerable<DepartmentResponseDTO>> GetAllAsync()
+    public async Task<IEnumerable<DepartmentResponseDto>> GetAllAsync()
     {
         var department = await _repository.GetAllAsync();
-        return department.Select(d => new DepartmentResponseDTO
+        return department.Select(d => new DepartmentResponseDto
         {
             Id = d.Id, DepartmentName = d.DepartmentName
         });
     }
 
-    public async Task<DepartmentResponseDTO?> GetByIdAsync(int id)
+    public async Task<DepartmentResponseDto?> GetByIdAsync(int id)
     {
         var department = await _repository.GetByIdAsync(id);
         return department is null
             ? null
-            : new DepartmentResponseDTO
+            : new DepartmentResponseDto
             {
                 Id = department.Id, DepartmentName = department.DepartmentName
             };
     }
 
-    public async Task<DepartmentResponseDTO> CreateAsync(DepartmentRequestDTO departmentRequestDto)
+    public async Task<DepartmentResponseDto> CreateAsync(DepartmentRequestDto departmentRequestDto)
     {
         var department = new Domain.Entities.Department(departmentRequestDto.DepartmentName);
         await _repository.AddAsync(department);
-        return new DepartmentResponseDTO
+        return new DepartmentResponseDto
         {
             Id = department.Id, DepartmentName = department.DepartmentName
         };
     }
 
-    public async Task<bool> UpdateAsync(int id, DepartmentRequestDTO departmentRequestDto)
+    public async Task<bool> UpdateAsync(int id, DepartmentRequestDto departmentRequestDto)
     {
         var department = await _repository.GetByIdAsync(id);
         if (department is null) return false;

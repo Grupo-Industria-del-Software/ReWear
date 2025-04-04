@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs.Orders
 {
-    public class OrderResponseDTO
+    public class OrderResponseDto
     {
         public int Id { get; set; }
         public int ProviderId { get; set; }
@@ -15,7 +15,7 @@ namespace Application.DTOs.Orders
         public required string CustomerName { get; set; }
         public int OrderStatus { get; set; }
         public required string OrderStatusName { get; set; }
-        public required List<OrderItemResponseDTO> OrderItems { get; set; } = new();
+        public required List<OrderItemResponseDto> OrderItems { get; set; } = new();
         public decimal TotalPrice { get; set; }
         public DateTime CreatedAt { get; set; }
     }

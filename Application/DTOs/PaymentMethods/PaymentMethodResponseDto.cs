@@ -1,6 +1,6 @@
 ﻿namespace Application.DTOs.PaymentMethods
 {
-    public class PaymentMethodResponseDTO
+    public class PaymentMethodResponseDto
     {
         public int Id { get; set; }
         public string Name { get; set; }   = string.Empty;

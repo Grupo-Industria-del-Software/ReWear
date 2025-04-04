@@ -28,14 +28,14 @@ public class DepartmentController: ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] DepartmentRequestDTO dto)
+    public async Task<IActionResult> Create([FromBody] DepartmentRequestDto dto)
     {
         var department = await _departmentService.CreateAsync(dto);
         return CreatedAtAction(nameof(GetById), new { id = department.Id }, department);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, [FromBody] DepartmentRequestDTO dto)
+    public async Task<IActionResult> Update(int id, [FromBody] DepartmentRequestDto dto)
     {
         var updatedDepartment = await _departmentService.UpdateAsync(id, dto);
         return updatedDepartment ? NoContent() : NotFound();

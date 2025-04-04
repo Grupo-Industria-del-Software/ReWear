@@ -1,6 +1,6 @@
 namespace Application.DTOs.Departments;
 
-public class DepartmentResponseDTO
+public class DepartmentResponseDto
 {
     public int Id { get; set; }
     public string DepartmentName { get; set; } =  string.Empty;
