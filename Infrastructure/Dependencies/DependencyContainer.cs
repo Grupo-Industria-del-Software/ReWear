@@ -1,6 +1,7 @@
 ﻿using Application.DTOs.Catalogs;
 using Application.Interfaces.Auth;
 using Application.Interfaces.Catalogs;
+using Application.Interfaces.CatregorySizes;
 using Application.Interfaces.Chat;
 using Application.Interfaces.Cloudinary;
 using Application.Interfaces.Department;
@@ -18,6 +19,7 @@ using Application.Interfaces.Utils;
 using Application.Mappers;
 using Application.Services;
 using Application.Services.Auth;
+using Application.Services.CategorySizes;
 using Application.Services.Orders;
 using Application.Services.Chat;
 using Application.Services.Departments;
@@ -101,7 +103,14 @@ namespace Infrastructure.Dependencies
             
             //Message
             services.AddScoped<IMessageRepository, MessageRepository>();
+
+            //CategorySize
+            services.AddScoped<ICategorySizeRepository, CategorySizeRepository>();
+            services.AddScoped<ICategorySizeService, CategorySizeService>();
+
+
             return services;
+
         } 
     }
 }
