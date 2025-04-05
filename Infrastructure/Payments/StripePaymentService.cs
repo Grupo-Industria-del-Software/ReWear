@@ -1,7 +1,6 @@
 using Application.Interfaces.PaymentMethods;
 using Application.Interfaces.Subscriptions;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 using Stripe;
 using Stripe.Checkout;
 using Subscription = Domain.Entities.Subscription;
@@ -79,6 +78,7 @@ public class StripePaymentService : IPaymentService
                 var subscription = new Subscription
                 {
                     UserId = userId,
+                    SubscriptionId = session.SubscriptionId,
                     PlanName = planName,
                     Price = price,
                     StartDate = DateTime.UtcNow,
@@ -97,6 +97,35 @@ public class StripePaymentService : IPaymentService
         catch (Exception ex)
         {
             Console.WriteLine($"Error procesando webhook: {ex.Message}");
+        }
+    }
+
+    public async Task CancelSubscriptionAsync(int userId)
+    {
+        var subscription = await _repository.GetByUserIdAsync(userId);
+
+        if (subscription == null || string.IsNullOrEmpty(subscription.SubscriptionId))
+        {
+            throw new InvalidOperationException("No active subscription found for this user.");
+        }
+        
+        var stripeSubService = new SubscriptionService();
+
+        try
+        {
+            _ = await stripeSubService.CancelAsync(subscription.SubscriptionId);
+
+            subscription.IsActive = false;
+            subscription.EndDate = DateTime.UtcNow;
+            
+            await _repository.UpdateAsync(subscription);
+
+            Console.WriteLine($"Subscription cancelada {subscription.SubscriptionId}.");
+        }
+        catch (StripeException ex)
+        {
+            Console.WriteLine($":Error al cancelar la subscription {ex.Message}");
+            throw;
         }
     }
 }

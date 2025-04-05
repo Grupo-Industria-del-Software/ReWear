@@ -1,13 +1,9 @@
-using Domain.Common;
+namespace Application.DTOs.Subscriptions;
 
-namespace Domain.Entities;
-
-public class Subscription : Entity
+public class SubscriptionResponseDto
 {
     public int UserId { get; set; }
     public string SubscriptionId { get; set; } = string.Empty;
-    public User? User { get; set; }
-
     public string PlanName { get; set; } = string.Empty;
     public decimal Price { get; set; }
     public DateTime StartDate { get; set; }
