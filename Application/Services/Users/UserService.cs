@@ -30,6 +30,21 @@ namespace Application.Services.Users
             return await _userRepository.UpdateAsync(user);
         }
 
+        public async Task<IEnumerable<UserResponseDto>> GetAllAsync()
+        {
+            var users = await _userRepository.GetAllAsync();
+
+            return users.Select(user => new UserResponseDto
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                RoleId = user.RoleId,
+                Active = user.Active // 
+            }).ToList();
+        }
         public async Task<UserResponseDto?> GetByIdAsync(int id)
         {
             var user = await _userRepository.GetByIdAsync(id);
@@ -40,21 +55,12 @@ namespace Application.Services.Users
             {
                 Id = user.Id,
                 FirstName = user.FirstName,
-                LastName = user.LastName
+                LastName = user.LastName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                RoleId = user.RoleId,
+                Active = user.Active //
             };
-        }
-
-        public async Task<IEnumerable<UserResponseDto>> GetAllAsync()
-        {
-            var users = await _userRepository.GetAllAsync();
-
-            // Mapeo manual (sin AutoMapper)
-            return users.Select(user => new UserResponseDto
-            {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName
-            }).ToList();
         }
 
         public async Task<bool> ChangeUserStatusAsync(int id, bool active)
@@ -63,7 +69,8 @@ namespace Application.Services.Users
             if (user == null)
                 return false;
 
-            return await _userRepository.ChangeUserStatusAsync(id, active);
+            user.Active = active; // 
+            return await _userRepository.UpdateAsync(user); // 
         }
     }
 }
