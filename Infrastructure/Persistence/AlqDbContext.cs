@@ -1,3 +1,4 @@
+using Domain.AggregateRoots.Chat;
 using Domain.AggregateRoots.Products;
 using Domain.AggregateRoots.Orders;
 using Domain.Entities;
@@ -131,11 +132,18 @@ namespace Infrastructure.Persistence
                 .HasForeignKey(o => o.OrderStatusId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            //Chat
+            // Relación Chat - Messages
             modelBuilder.Entity<Chat>()
                 .HasMany(c => c.Messages)
                 .WithOne(m => m.Chat)
                 .HasForeignKey(m => m.ChatId);
+            
+            // Relación Chat - Product
+            modelBuilder.Entity<Chat>()
+                .HasOne(c => c.Product)
+                .WithMany() 
+                .HasForeignKey(c => c.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             //Category Sizes
             modelBuilder.Entity<CategorySize>()

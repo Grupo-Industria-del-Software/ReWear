@@ -2,30 +2,39 @@ using Application.DTOs.Chats;
 using Application.DTOs.Messages;
 using Application.Interfaces.Chat;
 using Application.Interfaces.Message;
+using Application.Interfaces.Products;
 using Application.Interfaces.Users;
+using Domain.AggregateRoots.Chat;
 using Domain.Entities;
 
 namespace Application.Services.Chat;
 
 public class ChatService : IChatService
 {
-    private readonly IChatRepository _chatRepository;
+     private readonly IChatRepository _chatRepository;
     private readonly IUserRepository _userRepository;
     private readonly IMessageRepository _messageRepository;
+    private readonly IProductRepository _productRepository;
 
-    public ChatService(IChatRepository chatRepository, IUserRepository userRepository, IMessageRepository messageRepository)
+    public ChatService(IChatRepository chatRepository, IUserRepository userRepository, IMessageRepository messageRepository, IProductRepository productRepository)
     {
         _chatRepository = chatRepository;
         _userRepository = userRepository;
         _messageRepository = messageRepository;
+        _productRepository = productRepository;
     }
     
-    public async Task<ChatResponseDto> CreateChatAsync(int sellerId, int buyerId)
+    public async Task<ChatResponseDto> CreateChatAsync(int productId, int buyerId)
 {
-    var chat = new Domain.Entities.Chat()
+    var product = await _productRepository.GetByIdAsync(productId);
+    if (product == null)
+        throw new Exception("Producto no encontrado."); 
+    
+    var chat = new Domain.AggregateRoots.Chat.Chat()
     {
-        SellerId = sellerId,
+        SellerId = product.UserId,
         BuyerId = buyerId,
+        ProductId = productId,
         CreatedAt = DateTime.UtcNow
     };
     
@@ -35,6 +44,7 @@ public class ChatService : IChatService
     return new ChatResponseDto
     {
         ChatId = createdChat.Id,
+        ProductId = createdChat.ProductId,
         CreatedAt = createdChat.CreatedAt,
         SellerId = createdChat.SellerId,
         BuyerId = createdChat.BuyerId,
@@ -58,6 +68,7 @@ public async Task<IEnumerable<ChatResponseDto>> GetChatsForUserAsync(int userId)
         chatDtos.Add(new ChatResponseDto
         {
             ChatId = chat.Id,
+            ProductId = chat.ProductId,
             CreatedAt = chat.CreatedAt,
             SellerId = chat.SellerId,
             BuyerId = chat.BuyerId,

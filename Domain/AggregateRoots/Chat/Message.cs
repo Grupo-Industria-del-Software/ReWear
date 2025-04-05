@@ -1,8 +1,8 @@
 using Domain.Common;
 
-namespace Domain.Entities;
+namespace Domain.AggregateRoots.Chat;
 
-public class Message : Entity
+public class Message:AggregateRoot
 {
     public int ChatId { get; set; }
     public Chat Chat { get; set; }
