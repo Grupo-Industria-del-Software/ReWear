@@ -1,3 +1,4 @@
+using Application.DTOs.Cloudinary;
 using Application.Interfaces.Cloudinary;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
@@ -21,7 +22,7 @@ public class CloudinaryService : ICloudinaryService
         var account = new Account(_cloudName, _apiKey, _apiSecret);
         _cloudinary = new Cloudinary(account);
     }
-    public async Task<CloudinaryUploadResult> UploadImageAsync(string filePath)
+    public async Task<CloudinaryUploadResultDto> UploadImageAsync(string filePath)
     {
         var uploadParams = new ImageUploadParams()
         {
@@ -30,7 +31,7 @@ public class CloudinaryService : ICloudinaryService
     
         var uploadResult = await _cloudinary.UploadAsync(uploadParams);
     
-        return new CloudinaryUploadResult
+        return new CloudinaryUploadResultDto
         {
             Url = uploadResult.SecureUrl.ToString(),
             PublicId = uploadResult.PublicId

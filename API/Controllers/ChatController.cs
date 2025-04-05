@@ -16,9 +16,9 @@ public class ChatController: ControllerBase
     }
     
     [HttpPost("create")]
-    public async Task<IActionResult> CreateChat([FromQuery] int sellerId, [FromQuery] int buyerId)
+    public async Task<IActionResult> CreateChat([FromQuery] int productId, [FromQuery] int buyerId)
     {
-        var chat = await _chatService.CreateChatAsync(sellerId, buyerId);
+        var chat = await _chatService.CreateChatAsync(productId, buyerId);
         return Ok(chat);
     }
 

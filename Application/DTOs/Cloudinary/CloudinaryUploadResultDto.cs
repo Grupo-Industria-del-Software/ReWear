@@ -1,6 +1,6 @@
-namespace Application.Interfaces.Cloudinary;
+namespace Application.DTOs.Cloudinary;
 
-public class CloudinaryUploadResult
+public class CloudinaryUploadResultDto
 {
     public string Url { get; set; } = string.Empty;
     public string PublicId { get; set; } = string.Empty;

@@ -1,4 +1,5 @@
 using Application.Interfaces.Message;
+using Domain.AggregateRoots.Chat;
 using Domain.Entities;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;

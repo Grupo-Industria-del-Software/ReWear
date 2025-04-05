@@ -10,4 +10,6 @@ public interface IUserRepository
     Task<bool> UpdateAsync(User user);
     Task<User?> GetByRefreshToken(string refreshToken);
     Task<User?> GetByIdAsync(int id);
+    Task<IEnumerable<User>> GetAllAsync(); // Nuevo método
+    Task<bool> ChangeUserStatusAsync(int id, bool active); // Nuevo método
 }
