@@ -5,5 +5,6 @@ namespace Application.Interfaces.CatregorySizes;
 public interface ICategorySizeService
 {
     Task<CategorySizeDto> CreateAsync(CategorySizeDto categorySizeDto);
-    Task<List<CategorySizeDto>> GetAllSizeByCategoryAsync(int categoryId);
+    Task<IEnumerable<SizeByCategoryDto>> GetAllSizeByCategoryAsync(int categoryId);
+    Task<bool> DeleteAsync(int categoryId, int sizeId);
 }
