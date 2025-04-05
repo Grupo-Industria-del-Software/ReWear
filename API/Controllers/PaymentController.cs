@@ -47,4 +47,23 @@ public class PaymentController : ControllerBase
             return BadRequest($"Webhook Error: {ex.Message}");
         }
     }
+
+    [Authorize(Roles = "Seller")]
+    [HttpDelete]
+    public async Task<IActionResult> DeleteSubscription()
+    {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if(userId is null)
+            return BadRequest("UserId is invalid");
+        
+        try
+        {
+            await _service.CancelSubscriptionAsync(int.Parse(userId));
+            return Ok(new {message = "Subscription successfully canceled"});
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, new { message = "Error while cancelling subscription" });
+        }
+    }
 }

@@ -41,10 +41,14 @@ public class ProductController : ControllerBase
     { 
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         
+        if(userId == null)
+            return Unauthorized();
+        
         var  product = await _service.CreateAsync(int.Parse(userId),dto, images);
         return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
     }
 
+    //[Authorize(Roles = "Seller")]
     [HttpPatch ("{id}")]
     public async Task<IActionResult> Update(int id,[FromBody] ProductUpdateRequestDto dto)
     {
@@ -52,6 +56,7 @@ public class ProductController : ControllerBase
         return updated ? NoContent() : NotFound();
     }
 
+    //[Authorize(Roles = "Seller")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {

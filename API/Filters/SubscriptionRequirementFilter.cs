@@ -30,6 +30,12 @@ public class SubscriptionRequirementFilter : IAsyncAuthorizationFilter
 
         var role = userClaims.FindFirst(ClaimTypes.Role)?.Value ?? 
                    userClaims.FindFirst("role")?.Value;
+
+        if (string.IsNullOrEmpty(userId))
+        {
+            context.Result = new BadRequestResult();
+            return;
+        }
         
         if (role == "Seller")
         {
@@ -37,7 +43,7 @@ public class SubscriptionRequirementFilter : IAsyncAuthorizationFilter
             
             if (!subsActive)
             {
-                context.Result = new ForbidResult();
+                context.Result = new StatusCodeResult(402);
             }
         }
     }
