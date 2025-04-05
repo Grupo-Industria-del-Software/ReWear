@@ -124,7 +124,7 @@ public class StripePaymentService : IPaymentService
         }
         catch (StripeException ex)
         {
-            Console.WriteLine($":Error al cancelar la subscription {ex.Message}");
+            Console.WriteLine($"Error al cancelar la subscription {ex.Message}");
             throw;
         }
     }

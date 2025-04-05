@@ -23,11 +23,7 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequestDto, 
         [FromForm] IFormFile? profilePicture)
     {
-        if (registerRequestDto is null)
-        {
-            return BadRequest("Invalid request");
-        }
-    
+        
         var user = await _authService.RegisterAsync(registerRequestDto, profilePicture);
         return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
     }

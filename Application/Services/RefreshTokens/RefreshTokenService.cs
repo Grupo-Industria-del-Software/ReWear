@@ -53,4 +53,18 @@ public class RefreshTokenService : IRefreshTokenService
             IsUsed = token.IsUsed
         };
     }
+
+    public async Task<bool> MarkAsUsedAsync(int id)
+    {
+        var token = await _repository.GetByIdAsync(id);
+
+        if (token is null || token.IsUsed || token.ExpiresOnUtc < DateTime.UtcNow)
+        {
+            return false;
+        }
+        
+        token.IsUsed = true;
+        
+        return await _repository.UpdateAsync(token);
+    }
 }

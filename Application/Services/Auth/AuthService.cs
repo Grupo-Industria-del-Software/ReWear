@@ -27,11 +27,11 @@ public class AuthService : IAuthService
         _cloudinaryService = cloudinaryService;
     }
     
-    public async Task<RegisterResponseDto> RegisterAsync(RegisterRequestDto registerRequestDto, IFormFile profilePicture)
+    public async Task<RegisterResponseDto> RegisterAsync(RegisterRequestDto registerRequestDto, IFormFile? profilePicture)
     {
         var newPass = _hasher.HashPassword(registerRequestDto.Password);
         
-        string profilePicUrl = null; // Falta subir una imagen default 
+        string profilePicUrl = null; 
         string cloudinaryPublicId = null;
         
         if (profilePicture != null && profilePicture.Length > 0)
@@ -104,11 +104,12 @@ public class AuthService : IAuthService
     {
         var refreshToken = await _refreshTokenService.GetByRefreshTokenAsync(refreshTokenRequestDto.RefreshToken);
 
-        if (refreshToken is null || refreshToken.ExpiresOnUtc < DateTime.UtcNow)
+        if (refreshToken is null || refreshToken.ExpiresOnUtc < DateTime.UtcNow || refreshToken.IsUsed)
         {
             return null;
         }
-        // Falta marcar refresh token como usado
+
+        _ = await _refreshTokenService.MarkAsUsedAsync(refreshToken.Id);
 
         var newRtDto = new RefreshTokenRequestDto
         {
@@ -125,6 +126,4 @@ public class AuthService : IAuthService
             RefreshToken = newRefreshToken.Token
         };
     }
-    
-    
 }
