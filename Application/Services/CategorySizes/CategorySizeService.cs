@@ -36,7 +36,7 @@ public class CategorySizeService :  ICategorySizeService
         return categorySizes.Select(cs => new SizeByCategoryDto()
         {
             SizeId = cs.SizeId,
-            Label = cs.Size.Label
+            Label = cs.Size!.Label
         }).ToList();
     }
 

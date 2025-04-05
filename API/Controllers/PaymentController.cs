@@ -36,6 +36,11 @@ public class PaymentController : ControllerBase
         var json = await reader.ReadToEndAsync();
         
         var secretKey = _configuration["Stripe:WebhookSecret"];
+
+        if (secretKey is null)
+        {
+            return BadRequest("SecretKey is missing");
+        }
         
         try
         {

@@ -10,7 +10,7 @@ public class ChatResponseDto
     public DateTime CreatedAt { get; set; }
     public int SellerId { get; set; }
     public int BuyerId { get; set; }
-    public string BuyerName { get; set; }
-    public string BuyerImageUrl { get; set; }
-    public IEnumerable<MessageResponseDto> Messages { get; set; }
+    public string BuyerName { get; set; } = string.Empty;
+    public string BuyerImageUrl { get; set; } = string.Empty;
+    public IEnumerable<MessageResponseDto>? Messages { get; set; }
 }
