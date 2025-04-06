@@ -1,5 +1,7 @@
-﻿using Application.Interfaces.Orders;
+﻿using Application.DTOs.Orders;
+using Application.Interfaces.Orders;
 using Domain.AggregateRoots.Orders;
+using Domain.Common;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +16,19 @@ namespace Infrastructure.Repositories
             _context = context;
         }
 
+        public async Task<IEnumerable<Order>> GetAllByUserId(int userId, ISpecification<Order> spec)
+        {
+            IQueryable<Order> query = _context.Orders
+                .AsNoTracking()
+                .Where(o => o.ProviderId == userId)
+                .Where(spec.Criteria)
+                .Include(o => o.Provider)
+                .Include(o => o.Customer)
+                .Include(o => o.OrderStatus);
+            
+            return await query.ToListAsync();
+        }
+        
         public async Task<Order?> GetByIdAsync(int orderId)
         {
             return await _context.Orders
