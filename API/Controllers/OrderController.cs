@@ -18,6 +18,20 @@ namespace API.Controllers
             _orderService = orderService;
         }
 
+        [HttpGet("user")]
+        [Authorize(Roles = "Seller")]
+        public async Task<IActionResult> GetUserOrders([FromQuery] OrderFilterDto filterDto)
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        
+            if(userId == null)
+                return Unauthorized();
+            
+            var orders = await _orderService.GetAllByUserId(int.Parse(userId), filterDto);
+            
+            return Ok(orders);
+        }
+        
         [HttpPost]
         [Authorize(Roles = "Seller")]
         [ServiceFilter(typeof(SubscriptionRequirementFilter))]

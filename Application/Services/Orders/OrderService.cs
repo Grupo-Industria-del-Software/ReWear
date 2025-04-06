@@ -2,6 +2,7 @@
 using Application.Interfaces.Mappers;
 using Application.Interfaces.Orders;
 using Application.Interfaces.Products;
+using Application.Specifications;
 using Domain.AggregateRoots.Orders;
 using Domain.AggregateRoots.Products;
 using Domain.Common;
@@ -23,6 +24,24 @@ namespace Application.Services.Orders
             _orderRepository = orderRepository;
             _productRepository = productRepository;
             _orderMapper = orderMapper;
+        }
+
+        public async Task<IEnumerable<ShortOrderResponseDto>> GetAllByUserId(int userId, OrderFilterDto filterDto)
+        {
+            var spec = new OrderSpecification(
+                filterDto.CreatedAt,
+                filterDto.OrderStatusId
+            );
+            
+            var orders = await _orderRepository.GetAllByUserId(userId, spec);
+            
+            return orders.Select(o => new ShortOrderResponseDto
+            {
+                Name = o.Customer!.FirstName + " " + o.Customer.LastName,
+                OrderStatus = o.OrderStatus!.Label,
+                TotalPrice = o.TotalPrice,
+                CreatedAt = o.CreatedAt
+            });
         }
 
         public async Task<OrderResponseDto> CreateOrderAsync(int userId, OrderRequestDto request)
