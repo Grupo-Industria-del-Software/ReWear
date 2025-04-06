@@ -37,6 +37,7 @@ namespace Application.Services.Orders
             
             return orders.Select(o => new ShortOrderResponseDto
             {
+                id = o.Id,
                 Name = o.Customer!.FirstName + " " + o.Customer.LastName,
                 OrderStatus = o.OrderStatus!.Label,
                 TotalPrice = o.TotalPrice,

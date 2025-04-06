@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Infrastructure.Repositories
 {
@@ -29,13 +30,7 @@ namespace Infrastructure.Repositories
                 .Include(u => u.Role)
                 .SingleOrDefaultAsync(u => u.Email == email);
         }
-
-        public async Task<User?> GetById(int id)
-        {
-            return await _context.Users
-                .Include(u => u.Role)
-                .FirstOrDefaultAsync(u => u.Id == id);
-        }
+        
 
         public async Task<bool> UpdateAsync(User user)
         {

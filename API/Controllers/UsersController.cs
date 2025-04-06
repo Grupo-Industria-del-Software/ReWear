@@ -1,6 +1,10 @@
-﻿using Application.DTOs.Users;
+﻿using System.Security.Claims;
+using Application.DTOs.Users;
 using Application.Interfaces.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
+namespace API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -13,23 +17,34 @@ public class UsersController : ControllerBase
         _userService = userService;
     }
 
-    // 1. Obtener todos los usuarios
+    [HttpGet("profile")]
+    [Authorize]
+    public async Task<IActionResult> GetById()
+    {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (userId == null)
+            return Unauthorized();
+
+        var user = await _userService.GetByIdAsync(int.Parse(userId));
+
+        return user is null ? NotFound() : Ok(user);
+    }
+
     [HttpGet]
     public async Task<ActionResult<IEnumerable<UserResponseDto>>> GetAll()
     {
         var users = await _userService.GetAllAsync();
         return Ok(users);
     }
-
-    // 2. Cambiar estado activo/inactivo
+    
     [HttpPatch("{id}/status")]
     public async Task<IActionResult> ChangeStatus(int id, [FromBody] bool active)
     {
         var result = await _userService.ChangeUserStatusAsync(id, active);
         return result ? NoContent() : NotFound();
     }
-
-    // 3. Actualizar datos generales (opcional)
+    
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateUser(int id, [FromBody] UserRequestDto userDto)
     {

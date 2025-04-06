@@ -3,6 +3,8 @@ using Application.Interfaces.Users;
 using Domain.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Application.DTOs.Subscriptions;
+using Application.DTOs.UserRoles;
 
 namespace Application.Services.Users
 {
@@ -30,17 +32,25 @@ namespace Application.Services.Users
             return await _userRepository.UpdateAsync(user);
         }
 
-        public async Task<UserResponseDto?> GetByIdAsync(int id)
+        public async Task<UserProfileResponseDto?> GetByIdAsync(int id)
         {
             var user = await _userRepository.GetByIdAsync(id);
             if (user == null)
                 return null;
 
-            return new UserResponseDto
+            return new UserProfileResponseDto
             {
                 Id = user.Id,
                 FirstName = user.FirstName,
-                LastName = user.LastName
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                ProfilePicture = user.ProfilePicture,
+                Email = user.Email,
+                UserRole = new UserRolesResponseDto
+                {
+                    Id = user.Role!.Id,
+                    Rol = user.Role.Rol,
+                }
             };
         }
 
