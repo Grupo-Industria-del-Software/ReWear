@@ -76,6 +76,7 @@ public class ProductMapper : IProductMapper
     {
         return new ShortProductResponseDto
         {
+            Id = product.Id,
             Name = product.Name,
             Description = product.Description,
             Category = product.Category!.Label,
