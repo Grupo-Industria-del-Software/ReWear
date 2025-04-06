@@ -71,4 +71,27 @@ public class ProductMapper : IProductMapper
                 : null
         };
     }
+
+    public ShortProductResponseDto ToShortDto(Product product)
+    {
+        return new ShortProductResponseDto
+        {
+            Name = product.Name,
+            Description = product.Description,
+            Category = product.Category!.Label,
+            Condition = product.Condition!.Label,
+            ProductStatus = product.ProductStatus!.Label,
+            Size = product.Size!.Label,
+            Brand = product.Brand!.Label,
+            IsForRental = product.IsForRental,
+            Price = product.Price,
+            PricePerDay = product.PricePerDay,
+            Images = product.ProductImages.Select(i => new ProductImageResponseDto
+            {
+                ProductId = i.ProductId,
+                Id = i.Id,
+                ImageUrl = i.ImageUrl
+            })
+        };
+    }
 }

@@ -27,6 +27,16 @@ public class ProductController : ControllerBase
         return Ok(products);
     }
 
+    [HttpGet("user/{userId}")]
+    public async Task<IActionResult> GetAllByUserId(
+        [FromQuery] ProductFilterDto filterDto,
+        int userId
+    )
+    {
+        var products = await _service.GetAllByUserIdAsync(filterDto, userId);
+        return Ok(products);
+    }
+    
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {

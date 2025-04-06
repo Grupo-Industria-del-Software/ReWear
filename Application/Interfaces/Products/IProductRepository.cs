@@ -7,6 +7,7 @@ namespace Application.Interfaces.Products;
 public interface IProductRepository
 {
     Task<IEnumerable<Product>> GetAllAsync(ISpecification<Product> spec);
+    Task<IEnumerable<Product>> GetAllByUserIdAsync(int userId, ISpecification<Product> spec);
     Task<Product?> GetByIdAsync(int id);
     Task AddAsync(Product product);
     Task<bool> UpdateAsync(Product product);

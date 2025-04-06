@@ -36,25 +36,25 @@ public class ProductService : IProductService
         );
         
         var products = await _repository.GetAllAsync(spec);
-        return products.Select(p => new ShortProductResponseDto
-        {
-            Name = p.Name,
-            Description = p.Description,
-            Category = p.Category!.Label,
-            Condition = p.Condition!.Label,
-            ProductStatus = p.ProductStatus!.Label,
-            Size = p.Size!.Label,
-            Brand = p.Brand!.Label,
-            IsForRental = p.IsForRental,
-            Price = p.Price,
-            PricePerDay = p.PricePerDay,
-            Images = p.ProductImages.Select(i => new ProductImageResponseDto
-            {
-                ProductId = i.ProductId,
-                Id = i.Id,
-                ImageUrl = i.ImageUrl
-            })
-        });
+        return products.Select(p => _mapper.ToShortDto(p)).ToList();
+    }
+
+    public async Task<IEnumerable<ShortProductResponseDto>> GetAllByUserIdAsync(ProductFilterDto filterDto, int userId)
+    {
+        var spec = new ProductSpecification
+        (
+            filterDto.SizeId,
+            filterDto.BrandId,
+            filterDto.ConditionId,
+            filterDto.CategoryId,
+            filterDto.IsForRental,
+            filterDto.IsForSale,
+            filterDto.MinPrice,
+            filterDto.MaxPrice
+        );
+        
+        var products = await _repository.GetAllByUserIdAsync(userId,spec);
+        return products.Select(p => _mapper.ToShortDto(p)).ToList();
     }
 
     public async Task<ProductResponseDto?> GetByIdAsync(int id)

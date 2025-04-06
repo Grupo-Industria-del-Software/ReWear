@@ -15,12 +15,12 @@ public class ProductRepository : IProductRepository
     {
         _context = context; 
     }
-    
-    public async Task<IEnumerable<Product>> GetAllAsync(ISpecification<Product> spec)
+    private IQueryable<Product> GetBaseQuery(
+        ISpecification<Product>? spec = null
+        )
     {
         IQueryable<Product> query = _context.Products
             .AsNoTracking()
-            .Where(spec.Criteria)
             .Include(p => p.ProductImages)
             .Include(p => p.User)
             .Include(p => p.Category)
@@ -28,21 +28,31 @@ public class ProductRepository : IProductRepository
             .Include(p => p.Size)
             .Include(p => p.Brand)
             .Include(p => p.ProductStatus);
-        
-        return await query.ToListAsync();
+
+        if (spec != null)
+        {
+            query = query.Where(spec.Criteria);
+        }
+
+        return query;
+    }
+    
+    public async Task<IEnumerable<Product>> GetAllAsync(ISpecification<Product> spec)
+    {
+        return await GetBaseQuery(spec)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Product>> GetAllByUserIdAsync(int userId, ISpecification<Product> spec)
+    {
+        return await GetBaseQuery(spec)
+            .Where(p => p.UserId == userId)
+            .ToListAsync();
     }
 
     public async Task<Product?> GetByIdAsync(int id)
     {
-        return await _context.Products
-            .AsNoTracking()
-            .Include(p => p.ProductImages)
-            .Include(p => p.User)
-            .Include(p => p.Category)
-            .Include(p => p.Condition)
-            .Include(p => p.Size)
-            .Include(p => p.Brand)
-            .Include(p => p.ProductStatus)
+        return await GetBaseQuery()
             .FirstOrDefaultAsync(p => p.Id == id);
     }
 
