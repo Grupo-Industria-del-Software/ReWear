@@ -6,4 +6,5 @@ namespace Application.Interfaces.Mappers;
 public interface IProductMapper
 {
     ProductResponseDto ToDto(Product product);
+    ShortProductResponseDto ToShortDto(Product product);
 }
