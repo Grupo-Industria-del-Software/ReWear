@@ -39,10 +39,13 @@ public class UsersController : ControllerBase
     }
     
     [HttpPatch("{id}/status")]
-    public async Task<IActionResult> ChangeStatus(int id, [FromBody] bool active)
+    public async Task<ActionResult<UserResponseDto>> ChangeStatus(int id, [FromBody] bool active)
     {
         var result = await _userService.ChangeUserStatusAsync(id, active);
-        return result ? NoContent() : NotFound();
+        if (!result) return NotFound();
+
+        var updatedUser = await _userService.GetByIdAsync(id);
+        return Ok(updatedUser);
     }
     
     [HttpPut("{id}")]

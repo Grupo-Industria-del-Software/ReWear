@@ -10,5 +10,6 @@ public interface IUserRepository
     Task<User?> GetByRefreshToken(string refreshToken);
     Task<User?> GetByIdAsync(int id);
     Task<IEnumerable<User>> GetAllAsync();
+
     Task<bool> ChangeUserStatusAsync(int id, bool active);
 }
