@@ -25,18 +25,11 @@ namespace Application.Services.Orders
             _orderMapper = orderMapper;
         }
 
-        public async Task<OrderResponseDto> CreateOrderAsync(OrderRequestDto request)
+        public async Task<OrderResponseDto> CreateOrderAsync(int userId, OrderRequestDto request)
         {
-            if (request.OrderItems == null || !request.OrderItems.Any())
-                throw new ArgumentException("La orden debe contener al menos un item.");
-
-            var firstProduct = await _productRepository.GetByIdAsync(request.OrderItems.First().ProductId);
-            if (firstProduct == null)
-                throw new KeyNotFoundException($"Producto {request.OrderItems.First().ProductId} no encontrado");
-
             var order = new Order
             {
-                ProviderId = firstProduct.UserId,
+                ProviderId = userId,
                 CustomerId = request.CustomerId,
                 CreatedAt = DateTime.UtcNow,
                 OrderItems = new List<OrderItem>(),
@@ -59,7 +52,7 @@ namespace Application.Services.Orders
                     ProductId = itemRequest.ProductId,
                     RentalStart = itemRequest.RentalStart,
                     RentalEnd = itemRequest.RentalEnd,
-                    IsRental = itemRequest.RentalStart.HasValue && itemRequest.RentalEnd.HasValue,
+                    IsRental = itemRequest.RentalStart.HasValue || itemRequest.RentalEnd.HasValue,
                     Price = CalculatePrice(product, itemRequest)
                 };
 
@@ -82,7 +75,7 @@ namespace Application.Services.Orders
 
         private decimal CalculatePrice(Product product, OrderItemRequestDto itemRequest)
         {
-            if (itemRequest.RentalStart.HasValue && itemRequest.RentalEnd.HasValue)
+            if (itemRequest.RentalStart.HasValue || itemRequest.RentalEnd.HasValue)
             {
                 if (product.PricePerDay == null)
                     throw new InvalidOperationException("Precio de alquiler no configurado.");
@@ -142,7 +135,7 @@ namespace Application.Services.Orders
                 ProductId = item.ProductId,
                 RentalStart = item.RentalStart,
                 RentalEnd = item.RentalEnd,
-                IsRental = item.RentalStart.HasValue && item.RentalEnd.HasValue,
+                IsRental = item.RentalStart.HasValue || item.RentalEnd.HasValue,
                 Price = CalculatePrice(product, item)
             };
 
@@ -171,7 +164,7 @@ namespace Application.Services.Orders
         public async Task<bool> UpdateOrderItemAsync(int orderId, int itemId, OrderItemRequestDto request)
         {
             var order = await _orderRepository.GetByIdAsync(orderId);
-            if (order == null) return false;
+            if (order is null) return false;
 
             var item = order.OrderItems.FirstOrDefault(i => i.Id == itemId);
             if (item == null) return false;
@@ -184,7 +177,7 @@ namespace Application.Services.Orders
             item.ProductId = request.ProductId;
             item.RentalStart = request.RentalStart;
             item.RentalEnd = request.RentalEnd;
-            item.IsRental = request.RentalStart.HasValue && request.RentalEnd.HasValue; 
+            item.IsRental = request.RentalStart.HasValue || request.RentalEnd.HasValue; 
 
             item.Price = CalculatePrice(product, request); 
 

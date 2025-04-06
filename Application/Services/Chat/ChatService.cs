@@ -5,7 +5,6 @@ using Application.Interfaces.Message;
 using Application.Interfaces.Products;
 using Application.Interfaces.Users;
 using Domain.AggregateRoots.Chat;
-using Domain.Entities;
 
 namespace Application.Services.Chat;
 
