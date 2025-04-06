@@ -27,13 +27,18 @@ public class ProductController : ControllerBase
         return Ok(products);
     }
 
-    [HttpGet("user/{userId}")]
+    [HttpGet("user")]
+    [Authorize(Roles = "Seller")]
     public async Task<IActionResult> GetAllByUserId(
-        [FromQuery] ProductFilterDto filterDto,
-        int userId
+        [FromQuery] ProductFilterDto filterDto
     )
     {
-        var products = await _service.GetAllByUserIdAsync(filterDto, userId);
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        
+        if(userId == null)
+            return Unauthorized();
+        
+        var products = await _service.GetAllByUserIdAsync(filterDto, int.Parse(userId));
         return Ok(products);
     }
     
