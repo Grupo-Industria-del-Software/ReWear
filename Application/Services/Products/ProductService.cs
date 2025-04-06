@@ -21,7 +21,7 @@ public class ProductService : IProductService
         _cloudinaryService = cloudinaryService;
     }
     
-    public async Task<IEnumerable<ProductResponseDto>> GetAllAsync(ProductFilterDto filterDto)
+    public async Task<IEnumerable<ShortProductResponseDto>> GetAllAsync(ProductFilterDto filterDto)
     {
         var spec = new ProductSpecification
         (
@@ -36,7 +36,25 @@ public class ProductService : IProductService
         );
         
         var products = await _repository.GetAllAsync(spec);
-        return products.Select(p => _mapper.ToDto(p)).ToList();
+        return products.Select(p => new ShortProductResponseDto
+        {
+            Name = p.Name,
+            Description = p.Description,
+            Category = p.Category!.Label,
+            Condition = p.Condition!.Label,
+            ProductStatus = p.ProductStatus!.Label,
+            Size = p.Size!.Label,
+            Brand = p.Brand!.Label,
+            IsForRental = p.IsForRental,
+            Price = p.Price,
+            PricePerDay = p.PricePerDay,
+            Images = p.ProductImages.Select(i => new ProductImageResponseDto
+            {
+                ProductId = i.ProductId,
+                Id = i.Id,
+                ImageUrl = i.ImageUrl
+            })
+        });
     }
 
     public async Task<ProductResponseDto?> GetByIdAsync(int id)
@@ -116,11 +134,9 @@ public class ProductService : IProductService
         {
             await _cloudinaryService.DeleteImageAsync(existingImg.PublicId);
         }
-    
-        // Limpiar la colección de imágenes
+        
         product.ProductImages.Clear();
-    
-        // Procesar las nuevas imágenes
+        
         foreach (var imgDto in dto.ProductImages)
         {
             if (imgDto.ImageFile != null && imgDto.ImageFile.Length > 0)
@@ -152,8 +168,7 @@ public class ProductService : IProductService
     {
         var product = await _repository.GetByIdAsync(id);
         if (product == null) return false;
-    
-        // Eliminar cada imagen de Cloudinary
+        
         foreach (var img in product.ProductImages)
         {
             await _cloudinaryService.DeleteImageAsync(img.PublicId);
