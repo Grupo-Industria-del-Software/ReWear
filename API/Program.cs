@@ -10,6 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 var dbConfig = new DbConfig();
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Configure(builder.Configuration.GetSection("Kestrel"));
+});
+
+
 // Add services to the container.
 builder.Services.AddDbContext<AlqDbContext>(options => options.UseSqlServer(dbConfig.ConnectionString));
 
@@ -63,8 +69,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // Usar CORS
-app.UseCors("AllowFrontend");
 app.UseCors("AllowLocalhost");
+
 app.UseAuthorization();
 
 app.MapControllers();

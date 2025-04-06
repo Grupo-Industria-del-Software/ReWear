@@ -1,5 +1,8 @@
-﻿using Application.DTOs.Orders;
+﻿using System.Security.Claims;
+using API.Filters;
+using Application.DTOs.Orders;
 using Application.Interfaces.Orders;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -16,6 +19,8 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Seller")]
+        [ServiceFilter(typeof(SubscriptionRequirementFilter))]
         public async Task<IActionResult> CreateOrder([FromBody] OrderRequestDto request)
         {
             var hasInvalidItems = request.OrderItems.Any(item =>
@@ -25,9 +30,14 @@ namespace API.Controllers
             if (hasInvalidItems)
                 return BadRequest("Combinación inválida de fechas de alquiler");
 
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        
+            if(userId == null)
+                return Unauthorized();
+            
             try
             {
-                var order = await _orderService.CreateOrderAsync(request);
+                var order = await _orderService.CreateOrderAsync(int.Parse(userId),request);
                 return CreatedAtAction(nameof(GetOrder), new { id = order.Id }, order);
             }
             catch (Exception ex)
@@ -37,6 +47,8 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "Seller")]
+        [ServiceFilter(typeof(SubscriptionRequirementFilter))]
         public async Task<IActionResult> GetOrder(int id)
         {
             try
@@ -72,6 +84,8 @@ namespace API.Controllers
         }
 
         [HttpPost("{orderId}/items")]
+        [Authorize(Roles = "Seller")]
+        [ServiceFilter(typeof(SubscriptionRequirementFilter))]
         public async Task<IActionResult> AddOrderItem(int orderId, [FromBody] OrderItemRequestDto item)
         {
             try
@@ -86,6 +100,8 @@ namespace API.Controllers
         }
 
         [HttpDelete("{orderId}/items/{itemId}")]
+        [Authorize(Roles = "Seller")]
+        [ServiceFilter(typeof(SubscriptionRequirementFilter))]
         public async Task<IActionResult> RemoveOrderItem(int orderId, int itemId)
         {
             var success = await _orderService.RemoveItemFromOrderAsync(orderId, itemId);
@@ -93,6 +109,8 @@ namespace API.Controllers
         }
 
         [HttpPut("{orderId}/items/{itemId}")]
+        [Authorize(Roles = "Seller")]
+        [ServiceFilter(typeof(SubscriptionRequirementFilter))]
         public async Task<IActionResult> UpdateOrderItem(
             int orderId,
             int itemId,
