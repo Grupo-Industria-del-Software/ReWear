@@ -53,10 +53,10 @@ namespace Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Order order)
+        public async Task<bool> DeleteAsync(Order order)
         {
             _context.Orders.Remove(order);
-            await _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync() > 0;
         }
 
         public async Task<IEnumerable<Order>> GetByFiltersAsync(int? customerId = null, int? providerId = null)

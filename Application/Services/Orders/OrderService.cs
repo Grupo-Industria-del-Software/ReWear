@@ -149,6 +149,14 @@ namespace Application.Services.Orders
             return true;
         }
 
+        public async Task<bool> DeleteOrderAsync(int orderId)
+        {
+            var order = await  _orderRepository.GetByIdAsync(orderId);
+            if (order == null) return false;
+             
+            return await _orderRepository.DeleteAsync(order);
+        }
+
         public async Task<OrderItemResponseDto> AddItemToOrderAsync(int orderId, OrderItemRequestDto item)
         {
             var order = await _orderRepository.GetByIdAsync(orderId);
