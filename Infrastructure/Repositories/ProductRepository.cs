@@ -76,4 +76,13 @@ public class ProductRepository : IProductRepository
         _context.Products.Remove(product);
         return await _context.SaveChangesAsync() > 0;
     }
+
+    public async Task<bool> DeleteImageOfProductAsync(int imageId)
+    {
+        var img = await _context.ProductImages.FirstOrDefaultAsync(p => p.Id == imageId);
+        if (img == null) return false;
+        
+        _context.ProductImages.Remove(img);
+        return await _context.SaveChangesAsync() > 0;
+    }
 }

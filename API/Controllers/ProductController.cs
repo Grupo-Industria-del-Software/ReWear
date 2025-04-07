@@ -78,4 +78,11 @@ public class ProductController : ControllerBase
         var deleted = await _service.DeleteAsync(id);
         return deleted ? NoContent() : NotFound();
     }
+
+    [HttpDelete("image/{id}")]
+    public async Task<IActionResult> DeleteImageOfProduct(int id)
+    {
+        var deleted = await _service.DeleteImageOfProductAsync(id);
+        return deleted ? NoContent() : NotFound();
+    }
 }
