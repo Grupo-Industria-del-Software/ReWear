@@ -7,6 +7,8 @@ namespace Application.Interfaces.Orders
     public interface IOrderRepository
     {
         Task<IEnumerable<Order>>  GetAllByUserId(int userId, ISpecification<Order> spec);
+        
+        Task<IEnumerable<Order>>  GetAllByCustomerId(int userId, ISpecification<Order> spec);
         Task<Order?> GetByIdAsync(int orderId);
         Task AddAsync(Order order);
         Task UpdateAsync(Order order);

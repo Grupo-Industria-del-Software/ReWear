@@ -28,7 +28,20 @@ namespace Infrastructure.Repositories
             
             return await query.ToListAsync();
         }
-        
+
+        public async Task<IEnumerable<Order>> GetAllByCustomerId(int userId, ISpecification<Order> spec)
+        {
+            IQueryable<Order> query = _context.Orders
+                .AsNoTracking()
+                .Where(o => o.CustomerId == userId)
+                .Where(spec.Criteria)
+                .Include(o => o.Provider)
+                .Include(o => o.Customer)
+                .Include(o => o.OrderStatus);
+            
+            return await query.ToListAsync();
+        }
+
         public async Task<Order?> GetByIdAsync(int orderId)
         {
             return await _context.Orders
