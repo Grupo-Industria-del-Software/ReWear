@@ -25,7 +25,7 @@ public class ChatRepository:IChatRepository
     public async Task<Chat?> GetChatByUserAndProductAsync(int userId, int productId)
     {
         return await _context.Chats
-            .Where(c => c.SellerId == userId && c.ProductId == productId)
+            .Where(c => c.BuyerId == userId && c.ProductId == productId)
             .FirstOrDefaultAsync();
     }
 
