@@ -22,6 +22,13 @@ public class ChatRepository:IChatRepository
         return chat;
     }
 
+    public async Task<Chat?> GetChatByUserAndProductAsync(int userId, int productId)
+    {
+        return await _context.Chats
+            .Where(c => c.SellerId == userId && c.ProductId == productId)
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<Chat?> GetChatByIdAsync(int chatId)
     {
         return await _context.Chats
