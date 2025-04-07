@@ -10,7 +10,7 @@ namespace Application.Interfaces.Orders
         Task<Order?> GetByIdAsync(int orderId);
         Task AddAsync(Order order);
         Task UpdateAsync(Order order);
-        Task DeleteAsync(Order order);
+        Task<bool> DeleteAsync(Order order);
         Task<IEnumerable<Order>> GetByFiltersAsync(int? customerId = null, int? providerId = null);
     }
 }

@@ -134,5 +134,11 @@ namespace API.Controllers
             return success ? NoContent() : NotFound();
         }
 
+        [HttpDelete("{orderId}")]
+        public async Task<IActionResult> DeleteOrderAsync(int orderId)
+        {
+            var deleted =  await _orderService.DeleteOrderAsync(orderId);
+            return deleted ? NoContent() : NotFound();
+        }
     }
 }
