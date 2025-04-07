@@ -7,11 +7,6 @@ namespace Application.Mappers
 {
     public class OrderMapper : IOrderMapper
     {
-        private readonly IProductMapper _productMapper;
-        public OrderMapper(IProductMapper productMapper)
-        {
-            _productMapper = productMapper;
-        }
         public OrderResponseDto MapToOrderResponseDTO(Order order)
         {
             return new OrderResponseDto
@@ -35,14 +30,15 @@ namespace Application.Mappers
             {
                 Id = item.Id,
                 ProductId = item.ProductId,
+                ProductName = item.Product!.Name,
+                ProductSize = item.Product.Size!.Label,
                 Price = item.Price,
                 RentalStart = item.RentalStart,
                 RentalEnd = item.RentalEnd,
                 IsRental = item.IsRental,
                 RentalDays = item.RentalEnd.HasValue && item.RentalStart.HasValue
                              ? (item.RentalEnd.Value.DayNumber - item.RentalStart.Value.DayNumber)
-                             : (int?)null,
-                Product = item.Product != null ? _productMapper.ToDto(item.Product) : new ProductResponseDto()
+                             : (int?)null
             };
         }
     }
