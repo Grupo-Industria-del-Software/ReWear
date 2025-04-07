@@ -32,7 +32,7 @@ namespace API.Controllers
             return Ok(orders);
         }
 
-        [HttpPost("customer")]
+        [HttpGet("customer")]
         [Authorize]
         public async Task<IActionResult> GetCustomerOrders([FromQuery] OrderFilterDto filterDto)
         {
