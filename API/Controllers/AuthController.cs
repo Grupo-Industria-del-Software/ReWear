@@ -20,11 +20,11 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register([FromForm] RegisterRequestDto registerRequestDto, 
+    public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequestDto, 
         [FromForm] IFormFile? profilePicture)
     {
         
-        var user = await _authService.RegisterAsync(registerRequestDto, profilePicture);
+        var user = await _authService.RegisterAsync(registerRequestDto);
         return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
     }
 
