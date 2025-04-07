@@ -33,6 +33,8 @@ namespace Infrastructure.Repositories
         {
             return await _context.Orders
                 .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Product)
+                .ThenInclude(p => p.Size)
                 .Include(o => o.Provider)
                 .Include(o => o.Customer)
                 .Include(o => o.OrderStatus)
