@@ -8,7 +8,7 @@ namespace Application.Interfaces.Orders
     public interface IOrderService
     {
         Task<IEnumerable<ShortOrderResponseDto>> GetAllByUserId(int userId, OrderFilterDto filterDto);
-        Task<OrderResponseDto> CreateOrderAsync(int userId, OrderRequestDto request);
+        Task<CreatedOrderResponseDto> CreateOrderAsync(int userId, OrderRequestDto request);
         Task<decimal> CalculateOrderTotalAsync(int orderId);
         Task<OrderResponseDto> GetOrderByIdAsync(int id);
         Task<bool> UpdateOrderStatusAsync(int orderId, int statusId);

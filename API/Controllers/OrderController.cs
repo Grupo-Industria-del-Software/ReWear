@@ -19,7 +19,7 @@ namespace API.Controllers
         }
 
         [HttpGet("user")]
-        [Authorize]
+        [Authorize(Roles = "Seller")]
         public async Task<IActionResult> GetUserOrders([FromQuery] OrderFilterDto filterDto)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -34,7 +34,7 @@ namespace API.Controllers
         
         [HttpPost]
         [Authorize(Roles = "Seller")]
-        [ServiceFilter(typeof(SubscriptionRequirementFilter))]
+        //[ServiceFilter(typeof(SubscriptionRequirementFilter))]
         public async Task<IActionResult> CreateOrder([FromBody] OrderRequestDto request)
         {
             var hasInvalidItems = request.OrderItems.Any(item =>
@@ -61,7 +61,8 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize]
+        [Authorize(Roles = "Seller")]
+        //[ServiceFilter(typeof(SubscriptionRequirementFilter))]
         public async Task<IActionResult> GetOrder(int id)
         {
             try

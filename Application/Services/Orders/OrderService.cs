@@ -45,7 +45,7 @@ namespace Application.Services.Orders
             });
         }
 
-        public async Task<OrderResponseDto> CreateOrderAsync(int userId, OrderRequestDto request)
+        public async Task<CreatedOrderResponseDto> CreateOrderAsync(int userId, OrderRequestDto request)
         {
             var order = new Order
             {
@@ -80,8 +80,17 @@ namespace Application.Services.Orders
             }
 
             order.TotalPrice = order.OrderItems.Sum(i => i.Price);
+            
             await _orderRepository.AddAsync(order);
-            return _orderMapper.MapToOrderResponseDTO(order);
+            return new CreatedOrderResponseDto
+            {
+                Id = order.Id,
+                ProviderId = order.ProviderId,
+                CustomerId = order.CustomerId,
+                OrderStatusId = order.OrderStatusId,
+                TotalPrice = order.TotalPrice,
+                CreatedAt = order.CreatedAt,
+            };
         }
 
         private void ValidateRentalDates(OrderItemRequestDto item)
