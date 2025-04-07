@@ -27,13 +27,13 @@ public class ChatService : IChatService
     {
         var buyer = await _userRepository.GetByIdAsync(buyerId);
         if(buyer == null)
-            throw new InvalidOperationException();
+            throw new InvalidOperationException("User not found");
         
         var product = await _productRepository.GetByIdAsync(productId);
         if (product == null)
             throw new InvalidOperationException("Product not found."); 
         
-        var existingChat = await _chatRepository.GetChatByUserAndProductAsync(productId, productId);
+        var existingChat = await _chatRepository.GetChatByUserAndProductAsync(buyerId, productId);
         if (existingChat != null)
             return new CreatedChatResponseDto()
             {
@@ -93,7 +93,6 @@ public class ChatService : IChatService
                 })
             });
         }
-
         return chatDtos;
     }
 

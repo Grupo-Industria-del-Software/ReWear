@@ -51,7 +51,7 @@ public class ProductController : ControllerBase
 
     [HttpPost]
     [Authorize(Roles = "Seller")]
-    [ServiceFilter(typeof(SubscriptionRequirementFilter))]
+    //[ServiceFilter(typeof(SubscriptionRequirementFilter))]
     public async Task<IActionResult> Create([FromForm] ProductRequestDto dto, [FromForm] List<IFormFile> images)
     { 
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
