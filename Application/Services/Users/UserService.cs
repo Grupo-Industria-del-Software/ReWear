@@ -68,7 +68,10 @@ namespace Application.Services.Users
             {
                 Id = user.Id,
                 FirstName = user.FirstName,
-                LastName = user.LastName
+                LastName = user.LastName,
+                Email = user.Email,
+                RoleId = user.RoleId,
+                Active = user.Active
             }).ToList();
         }
 
