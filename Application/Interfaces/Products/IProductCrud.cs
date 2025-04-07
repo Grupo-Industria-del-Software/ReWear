@@ -11,4 +11,5 @@ public interface IProductCrud
     Task<ProductResponseDto> CreateAsync(int userId, ProductRequestDto dto, List<IFormFile> images);    
     Task<bool> UpdateAsync(int id, ProductUpdateRequestDto dto);
     Task<bool> DeleteAsync(int id);
+    Task<bool> DeleteImageOfProductAsync(int imageId);
 }

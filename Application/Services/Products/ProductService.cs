@@ -177,4 +177,8 @@ public class ProductService : IProductService
         return await _repository.DeleteAsync(id);
     }
 
+    public async Task<bool> DeleteImageOfProductAsync(int imageId)
+    {
+        return await _repository.DeleteImageOfProductAsync(imageId);
+    }
 }
