@@ -67,7 +67,12 @@ public class AuthService : IAuthService
         if (user is null || !_hasher.VerifyPassword(user.Password, loginRequestDto.Password))
         {
             return null;
-        } 
+        }
+
+        if (!user.Active)
+        {
+            return null;
+        }
         
         var accessToken = _jwtService.GenerateJwtToken(user);
         var rfDto = new RefreshTokenRequestDto
