@@ -21,24 +21,21 @@ public class ChatController: ControllerBase
         var chat = await _chatService.CreateChatAsync(productId, buyerId);
         return Ok(chat);
     }
-
-// Obtener los chats de un usuario
+    
     [HttpGet("{userId}")]
     public async Task<IActionResult> GetChats(int userId)
     {
         var chats = await _chatService.GetChatsForUserAsync(userId);
         return Ok(chats);
     }
-
-// Enviar un mensaje
+    
     [HttpPost("message")]
     public async Task<IActionResult> SendMessage([FromBody] MessageRequestDto messageDto)
     {
         var message = await _chatService.SendMessageAsync(messageDto);
         return Ok(message);
     }
-
-// Obtener mensajes de un chat
+    
     [HttpGet("messages/{chatId}")]
     public async Task<IActionResult> GetMessages(int chatId)
     {

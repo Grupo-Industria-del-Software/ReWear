@@ -23,11 +23,26 @@ public class ChatService : IChatService
         _productRepository = productRepository;
     }
     
-    public async Task<ChatResponseDto> CreateChatAsync(int productId, int buyerId)
+    public async Task<CreatedChatResponseDto> CreateChatAsync(int productId, int buyerId)
     {
+        var buyer = await _userRepository.GetByIdAsync(buyerId);
+        if(buyer == null)
+            throw new InvalidOperationException();
+        
         var product = await _productRepository.GetByIdAsync(productId);
         if (product == null)
             throw new InvalidOperationException("Product not found."); 
+        
+        var existingChat = await _chatRepository.GetChatByUserAndProductAsync(productId, productId);
+        if (existingChat != null)
+            return new CreatedChatResponseDto()
+            {
+                ChatId = existingChat.Id,
+                ProductId = existingChat.ProductId,
+                CreatedAt = existingChat.CreatedAt,
+                SellerId = existingChat.SellerId,
+                BuyerId = existingChat.BuyerId,
+            };
         
         var chat = new Domain.AggregateRoots.Chat.Chat()
         {
@@ -38,18 +53,14 @@ public class ChatService : IChatService
         };
         
         var createdChat = await _chatRepository.CreateChatAsync(chat);
-        var buyer = await _userRepository.GetByIdAsync(buyerId);
 
-        return new ChatResponseDto
+        return new CreatedChatResponseDto()
         {
             ChatId = createdChat.Id,
             ProductId = createdChat.ProductId,
             CreatedAt = createdChat.CreatedAt,
             SellerId = createdChat.SellerId,
-            BuyerId = createdChat.BuyerId,
-            BuyerName = $"{buyer.FirstName} {buyer.LastName}",
-            BuyerImageUrl = buyer.ProfilePicture,
-            Messages = new List<MessageResponseDto>()
+            BuyerId = createdChat.BuyerId
         };
     }
 
