@@ -31,7 +31,7 @@ public class AuthService : IAuthService
     {
         var newPass = _hasher.HashPassword(registerRequestDto.Password);
         
-        string profilePicUrl = null; 
+        var profilePicUrl = "https://res.cloudinary.com/dl6b1mt6d/image/upload/v1743998354/j5tcihnbpwnkbgbydmpn.avif"; 
         string cloudinaryPublicId = null;
         
         if (profilePicture != null && profilePicture.Length > 0)

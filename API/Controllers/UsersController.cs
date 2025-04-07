@@ -54,4 +54,17 @@ public class UsersController : ControllerBase
         var result = await _userService.UpdateUser(id, userDto);
         return result ? NoContent() : NotFound();
     }
+
+    [HttpPatch("profile")]
+    [Authorize]
+    public async Task<IActionResult> UpdateProfilePicture(IFormFile? profilePicture)
+    {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (userId == null)
+            return Unauthorized();
+        
+        var updated = await _userService.UpdateProfilePictureAsync(int.Parse(userId), profilePicture);
+        return updated ? NoContent() : NotFound();
+    }
 }

@@ -20,7 +20,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequestDto, 
+    public async Task<IActionResult> Register([FromForm] RegisterRequestDto registerRequestDto, 
         [FromForm] IFormFile? profilePicture)
     {
         
