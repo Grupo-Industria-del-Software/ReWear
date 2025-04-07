@@ -12,5 +12,4 @@ public class ProductUpdateRequestDto
     public decimal? PricePerDay { get; set; }
     public bool? IsForSale { get; set; }
     public bool? IsForRental { get; set; }
-    public List<ProductImageRequestDto>? ProductImages { get; set; }
 }
