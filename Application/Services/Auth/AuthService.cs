@@ -27,27 +27,12 @@ public class AuthService : IAuthService
         _cloudinaryService = cloudinaryService;
     }
     
-    public async Task<RegisterResponseDto> RegisterAsync(RegisterRequestDto registerRequestDto, IFormFile? profilePicture)
+    public async Task<RegisterResponseDto> RegisterAsync(RegisterRequestDto registerRequestDto)
     {
         var newPass = _hasher.HashPassword(registerRequestDto.Password);
         
         var profilePicUrl = "https://res.cloudinary.com/dl6b1mt6d/image/upload/v1743998354/j5tcihnbpwnkbgbydmpn.avif"; 
         string cloudinaryPublicId = null;
-        
-        if (profilePicture != null && profilePicture.Length > 0)
-        {
-            var tempFilePath = Path.GetTempFileName();
-            using (var stream = new FileStream(tempFilePath, FileMode.Create))
-            {
-                await profilePicture.CopyToAsync(stream);
-            }
-            
-            var uploadResult = await _cloudinaryService.UploadImageAsync(tempFilePath);
-            profilePicUrl = uploadResult.Url;
-            cloudinaryPublicId = uploadResult.PublicId;
-            
-            File.Delete(tempFilePath);
-        }
         
         var user = new User(
             registerRequestDto.FirstName, 
