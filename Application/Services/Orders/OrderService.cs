@@ -45,6 +45,24 @@ namespace Application.Services.Orders
             });
         }
 
+        public async Task<IEnumerable<ShortOrderResponseDto>> GetAllByCustomerId(int userId, OrderFilterDto filterDto)
+        {
+            var spec = new OrderSpecification(
+                filterDto.CreatedAt,
+                filterDto.OrderStatusId
+            );
+            var orders = await _orderRepository.GetAllByCustomerId(userId, spec);
+            
+            return orders.Select(o => new ShortOrderResponseDto
+            {
+                id = o.Id,
+                Name = o.Provider!.FirstName + " " + o.Provider.LastName,
+                OrderStatus = o.OrderStatus!.Label,
+                TotalPrice = o.TotalPrice,
+                CreatedAt = o.CreatedAt
+            });
+        }
+
         public async Task<CreatedOrderResponseDto> CreateOrderAsync(int userId, OrderRequestDto request)
         {
             var order = new Order
