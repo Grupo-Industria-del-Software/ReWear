@@ -2,19 +2,24 @@ using Application.DTOs.Users;
 using Application.Interfaces.Users;
 using Domain.Entities;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using Application.DTOs.Subscriptions;
 using Application.DTOs.UserRoles;
+using Application.Interfaces.Cloudinary;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.Services.Users
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly ICloudinaryService _cloudinaryService;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository,  ICloudinaryService cloudinaryService)
         {
             _userRepository = userRepository;
+            _cloudinaryService = cloudinaryService;
         }
 
         public async Task<bool> UpdateUser(int id, UserRequestDto dto)
@@ -74,6 +79,33 @@ namespace Application.Services.Users
                 return false;
 
             return await _userRepository.ChangeUserStatusAsync(id, active);
+        }
+
+        public async Task<bool> UpdateProfilePictureAsync(int userId, IFormFile? profilePicture)
+        {
+            var user = await _userRepository.GetByIdAsync(userId);
+            if (user == null) return false;
+
+            var profilePicUrl = string.Empty;
+            
+            if (profilePicture is { Length: > 0 })
+            {
+                var tempFile = Path.GetTempFileName();
+
+                await using (var stream = new FileStream(tempFile, FileMode.Create))
+                {
+                    await profilePicture.CopyToAsync(stream);
+                }
+                
+                var uploadResult = await _cloudinaryService.UploadImageAsync(tempFile);
+                profilePicUrl = uploadResult.Url;
+                
+                File.Delete(tempFile);
+            }
+            
+            user.ProfilePicture = profilePicUrl;
+            
+            return await _userRepository.UpdateAsync(user);
         }
     }
 }

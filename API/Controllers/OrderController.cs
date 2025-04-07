@@ -19,7 +19,7 @@ namespace API.Controllers
         }
 
         [HttpGet("user")]
-        [Authorize(Roles = "Seller")]
+        [Authorize]
         public async Task<IActionResult> GetUserOrders([FromQuery] OrderFilterDto filterDto)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -61,8 +61,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "Seller")]
-        [ServiceFilter(typeof(SubscriptionRequirementFilter))]
+        [Authorize]
         public async Task<IActionResult> GetOrder(int id)
         {
             try
