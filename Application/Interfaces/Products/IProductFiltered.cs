@@ -1,4 +1,5 @@
 using System.Collections;
+using Application.Interfaces.Specifications;
 using Domain.AggregateRoots.Products;
 using Domain.Common;
 

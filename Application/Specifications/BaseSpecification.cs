@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using Application.Interfaces.Specifications;
 using Domain.Common;
 
 namespace Application.Specifications;
