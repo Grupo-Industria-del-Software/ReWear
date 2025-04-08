@@ -47,7 +47,7 @@ namespace API.Controllers
         
         [HttpPost]
         [Authorize(Roles = "Seller")]
-        //[ServiceFilter(typeof(SubscriptionRequirementFilter))]
+        [ServiceFilter(typeof(SubscriptionRequirementFilter))]
         public async Task<IActionResult> CreateOrder([FromBody] OrderRequestDto request)
         {
             var hasInvalidItems = request.OrderItems.Any(item =>
@@ -75,7 +75,7 @@ namespace API.Controllers
 
         [HttpGet("{id}")]
         [Authorize]
-        //[ServiceFilter(typeof(SubscriptionRequirementFilter))]
+        [ServiceFilter(typeof(SubscriptionRequirementFilter))]
         public async Task<IActionResult> GetOrderById(int id)
         {
             try
@@ -112,7 +112,7 @@ namespace API.Controllers
 
         [HttpPost("{orderId}/items")]
         [Authorize(Roles = "Seller")]
-        //[ServiceFilter(typeof(SubscriptionRequirementFilter))]
+        [ServiceFilter(typeof(SubscriptionRequirementFilter))]
         public async Task<IActionResult> AddOrderItem(int orderId, [FromBody] OrderItemRequestDto item)
         {
             try
@@ -128,7 +128,7 @@ namespace API.Controllers
 
         [HttpDelete("{orderId}/items/{itemId}")]
         [Authorize(Roles = "Seller")]
-        //[ServiceFilter(typeof(SubscriptionRequirementFilter))]
+        [ServiceFilter(typeof(SubscriptionRequirementFilter))]
         public async Task<IActionResult> RemoveOrderItem(int orderId, int itemId)
         {
             var success = await _orderService.RemoveItemFromOrderAsync(orderId, itemId);
@@ -137,7 +137,7 @@ namespace API.Controllers
 
         [HttpPut("{orderId}/items/{itemId}")]
         [Authorize(Roles = "Seller")]
-        //[ServiceFilter(typeof(SubscriptionRequirementFilter))]
+        [ServiceFilter(typeof(SubscriptionRequirementFilter))]
         public async Task<IActionResult> UpdateOrderItem(
             int orderId,
             int itemId,

@@ -51,7 +51,7 @@ public class ProductController : ControllerBase
 
     [HttpPost]
     [Authorize(Roles = "Seller")]
-    //[ServiceFilter(typeof(SubscriptionRequirementFilter))]
+    [ServiceFilter(typeof(SubscriptionRequirementFilter))]
     public async Task<IActionResult> Create([FromForm] ProductRequestDto dto, [FromForm] List<IFormFile> images)
     { 
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -63,16 +63,18 @@ public class ProductController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
     }
 
-    //[Authorize(Roles = "Seller")]
+    [Authorize(Roles = "Seller")]
     [HttpPatch ("{id}")]
+    [ServiceFilter(typeof(SubscriptionRequirementFilter))]
     public async Task<IActionResult> Update(int id,[FromBody] ProductUpdateRequestDto dto)
     {
         var updated = await _service.UpdateAsync(id, dto);
         return updated ? NoContent() : NotFound();
     }
 
-    //[Authorize(Roles = "Seller")]
+    [Authorize(Roles = "Seller")]
     [HttpDelete("{id}")]
+    [ServiceFilter(typeof(SubscriptionRequirementFilter))]
     public async Task<IActionResult> Delete(int id)
     {
         var deleted = await _service.DeleteAsync(id);
