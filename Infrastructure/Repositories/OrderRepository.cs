@@ -1,5 +1,6 @@
 ﻿using Application.DTOs.Orders;
 using Application.Interfaces.Orders;
+using Application.Interfaces.Specifications;
 using Domain.AggregateRoots.Orders;
 using Domain.Common;
 using Infrastructure.Persistence;

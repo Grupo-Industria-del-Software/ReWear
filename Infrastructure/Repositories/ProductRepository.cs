@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using Application.Interfaces.Products;
+using Application.Interfaces.Specifications;
 using Domain.AggregateRoots.Products;
 using Domain.Common;
 using Infrastructure.Persistence;
