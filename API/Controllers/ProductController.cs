@@ -66,9 +66,12 @@ public class ProductController : ControllerBase
     [Authorize(Roles = "Seller")]
     [HttpPatch ("{id}")]
     [ServiceFilter(typeof(SubscriptionRequirementFilter))]
-    public async Task<IActionResult> Update(int id,[FromBody] ProductUpdateRequestDto dto)
+    public async Task<IActionResult> Update(
+        int id,
+        [FromForm] ProductUpdateRequestDto dto,
+        [FromForm] List<IFormFile> images)
     {
-        var updated = await _service.UpdateAsync(id, dto);
+        var updated = await _service.UpdateAsync(id, dto, images);
         return updated ? NoContent() : NotFound();
     }
 

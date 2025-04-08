@@ -114,54 +114,65 @@ public class ProductService : IProductService
         return _mapper.ToDto(product);
     }
 
-    public async Task<bool> UpdateAsync(int id, ProductUpdateRequestDto dto)
+    public async Task<bool> UpdateAsync(int id, ProductUpdateRequestDto dto, List<IFormFile> images)
+{
+    var product = await _repository.GetByIdAsync(id);
+    if (product == null) return false;
+
+    // Actualización de campos básicos
+    product.CategoryId = dto.CategoryId ?? product.CategoryId;
+    product.ConditionId = dto.ConditionId ?? product.ConditionId;
+    product.SizeId = dto.SizeId ?? product.SizeId;
+    product.BrandId = dto.BrandId ?? product.BrandId;
+    product.Name = string.IsNullOrWhiteSpace(dto.Name) ? product.Name : dto.Name;
+    product.Description = string.IsNullOrWhiteSpace(dto.Description) ? product.Description : dto.Description;
+    product.Price = dto.Price ?? product.Price;
+    product.PricePerDay = dto.PricePerDay ?? product.PricePerDay;
+    product.IsForSale = dto.IsForSale ?? product.IsForSale;
+    product.IsForRental = dto.IsForRental ?? product.IsForRental;
+
+    // Si hay nuevas imágenes, eliminar las antiguas y subir nuevas
+    if (images != null && images.Any())
     {
-        var product = await _repository.GetByIdAsync(id);
-        if (product == null) return false;
-        
-        product.CategoryId = dto.CategoryId ?? product.CategoryId;
-        product.ConditionId = dto.ConditionId ?? product.ConditionId;
-        product.SizeId = dto.SizeId ?? product.SizeId;
-        product.BrandId = dto.BrandId ?? product.BrandId;
-        product.Name = string.IsNullOrWhiteSpace(dto.Name) ? product.Name : dto.Name;
-        product.Description = string.IsNullOrWhiteSpace(dto.Description) ? product.Description : dto.Description;
-        product.Price = dto.Price ?? product.Price;
-        product.PricePerDay = dto.PricePerDay ?? product.PricePerDay;
-        product.IsForSale = dto.IsForSale ?? product.IsForSale;
-        product.IsForRental = dto.IsForRental ?? product.IsForRental;
-        
         foreach (var existingImg in product.ProductImages)
         {
             await _cloudinaryService.DeleteImageAsync(existingImg.PublicId);
         }
-        
+
         product.ProductImages.Clear();
-        
-        foreach (var imgDto in dto.ProductImages)
+
+        foreach (var imgFile in images)
         {
-            if (imgDto.ImageFile != null && imgDto.ImageFile.Length > 0)
+            if (imgFile != null && imgFile.Length > 0)
             {
                 var tempFilePath = Path.GetTempFileName();
-                using (var stream = new FileStream(tempFilePath, FileMode.Create))
+                try
                 {
-                    await imgDto.ImageFile.CopyToAsync(stream);
+                    using (var stream = new FileStream(tempFilePath, FileMode.Create))
+                    {
+                        await imgFile.CopyToAsync(stream);
+                    }
+
+                    var uploadResult = await _cloudinaryService.UploadImageAsync(tempFilePath);
+
+                    product.ProductImages.Add(new ProductImage
+                    {
+                        ProductId = product.Id,
+                        ImageUrl = uploadResult.Url,
+                        PublicId = uploadResult.PublicId,
+                    });
                 }
-    
-                var uploadResult = await _cloudinaryService.UploadImageAsync(tempFilePath);
-    
-                product.ProductImages.Add(new ProductImage
+                finally
                 {
-                    ProductId = product.Id,
-                    ImageUrl = uploadResult.Url,
-                    PublicId = uploadResult.PublicId,
-                });
-    
-                File.Delete(tempFilePath);
+                    if (File.Exists(tempFilePath))
+                        File.Delete(tempFilePath);
+                }
             }
         }
-    
-        return await _repository.UpdateAsync(product);
     }
+
+    return await _repository.UpdateAsync(product);
+}
 
 
     public async Task<bool> DeleteAsync(int id)
